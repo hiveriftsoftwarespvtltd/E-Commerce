@@ -1,0 +1,1185 @@
+
+
+{
+  "products": [
+    {
+      "id": 1,
+      "title": "Portable Juicer for Personal Home Uses Gym lover.",
+      "description": "Whether you're hitting the gym, heading to work, or simply enjoying a refreshing drink at home, this portable juicer is the perfect companion to keep you energized with fresh, healthy juices. Compact and easy to carry, itâs designed for those with an active lifestyle.",
+      "originalPrice": 599,
+      "itemLeft":10,
+      "taxable":true,
+      "salePrice": 399,
+      "discount": "-39%",
+      "category": "Household",
+      "categoryId": 4,
+      "inStock": true,
+      "isFavourite": true,
+      "images": [
+        "/products/Product9/1.png",
+        "/products/Product9/2.png",
+        "/products/Product9/3.png",
+        "/products/Product9/4.png"
+      ],
+      "estimatedDeliveryDays": 6,
+      "shipping": {
+        "type": "free",
+        "charge": 0
+      },
+      "gstPercent": 18,
+      "reviews": [
+        {
+          "userName": "Priya",
+          "rating": 4,
+          "review": "Great quality, worth buying!",
+          "date": "2026-02-04",
+          "verified": false,
+          "images": [
+            "https://picsum.photos/seed/rev1/300/300",
+            "https://picsum.photos/seed/rev2/300/300",
+            "https://picsum.photos/seed/rev3/300/300",
+            "https://picsum.photos/seed/rev4/300/300"
+          ],
+          "likes": 27
+        },
+        {
+          "userName": "Rahul",
+          "rating": 4,
+          "review": "Great quality, worth buying!",
+          "date": "2025-09-24",
+          "verified": true,
+          "images": [
+            "https://picsum.photos/seed/rev2/300/300",
+            "https://picsum.photos/seed/rev3/300/300",
+            "https://picsum.photos/seed/rev4/300/300",
+            "https://picsum.photos/seed/rev5/300/300"
+          ],
+          "likes": 48
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Rechargeable Electric Lighter for Gas Candle and Firework",
+      "description": "Plasma Arc Technology: The flameless plasma arc provides a powerful, windproof ignition that works flawlessly in any weather conditions. Perfect for lighting candles, gas stoves, BBQ grills, and more. Rechargeable via USB: Save money and reduce waste with this rechargeable lighter. Simply plug it into any USB port to recharge, eliminating the need for disposable lighters.",
+      "originalPrice": 699,
+      "salePrice": 599,
+      "discount": "-20%",
+      "category": "Household",
+      "categoryId": 1,
+      "inStock": true,
+      "isFavourite": false,
+      "images": [
+        "/products/Product10/1.png",
+        "/products/Product10/2.png",
+        "/products/Product10/3.png",
+        "/products/Product10/4.png"
+      ],
+      "estimatedDeliveryDays": 3,
+      "shipping": {
+        "type": "flat",
+        "charge": 141
+      },
+      "gstPercent": 18,
+      "reviews": [
+        {
+          "userName": "Amit",
+          "rating": 4,
+          "review": "Great quality, worth buying!",
+          "date": "2025-12-03",
+          "verified": false,
+          "images": [
+            "https://picsum.photos/seed/rev2/300/300",
+            "https://picsum.photos/seed/rev3/300/300",
+            "https://picsum.photos/seed/rev4/300/300",
+            "https://picsum.photos/seed/rev5/300/300"
+          ],
+          "likes": 45
+        },
+        {
+          "userName": "Amit",
+          "rating": 3,
+          "review": "Great quality, worth buying!",
+          "date": "2025-09-05",
+          "verified": false,
+          "images": [
+            "https://picsum.photos/seed/rev3/300/300",
+            "https://picsum.photos/seed/rev4/300/300",
+            "https://picsum.photos/seed/rev5/300/300",
+            "https://picsum.photos/seed/rev6/300/300"
+          ],
+          "likes": 29
+        },
+        {
+          "userName": "Sneha",
+          "rating": 3,
+          "review": "Great quality, worth buying!",
+          "date": "2025-11-29",
+          "verified": false,
+          "images": [
+            "https://picsum.photos/seed/rev4/300/300",
+            "https://picsum.photos/seed/rev5/300/300",
+            "https://picsum.photos/seed/rev6/300/300",
+            "https://picsum.photos/seed/rev7/300/300"
+          ],
+          "likes": 18
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Automatic Water Dispenser for 20 Litres Can",
+      "description": "Convenient Operation: Effortlessly dispense water with a touch of a button. Ideal for quick and hassle-free hydration.Universal Compatibility: Designed to fit standard 20-litre water cans, ensuring compatibility with most water supplies.High-Efficiency Pump: Delivers a steady flow of water with minimal noise, perfect for both home and office use.Rechargeable Battery: Equipped with a long-lasting rechargeable battery, providing multiple uses on a single charge.LED Indicator: Features an LED light to indicate when the battery is low or when the device is in use.Easy Installation: Simple to set up with no tools required; fits securely onto water cans for a leak-proof experience.",
+ 
+      "salePrice": 699,
+      "discount": "-20%",
+      "category": "Household",
+      "categoryId": 10,
+      "inStock": true,
+      "isFavourite": true,
+      "images": [
+        "/products/Product4/1.png",
+        "/products/Product4/2.png",
+        "/products/Product4/3.png",
+        "/products/Product4/4.png"
+      ],
+      "estimatedDeliveryDays": 7,
+      "shipping": {
+        "type": "flat",
+        "charge": 54
+      },
+      "gstPercent": 18,
+      "reviews": [
+        {
+          "userName": "Neha",
+          "rating": 3,
+          "review": "Great quality, worth buying!",
+          "date": "2025-12-15",
+          "verified": false,
+          "images": [
+            "https://picsum.photos/seed/rev3/300/300",
+            "https://picsum.photos/seed/rev4/300/300",
+            "https://picsum.photos/seed/rev5/300/300",
+            "https://picsum.photos/seed/rev6/300/300"
+          ],
+          "likes": 11
+        },
+        {
+          "userName": "Rahul",
+          "rating": 5,
+          "review": "Great quality, worth buying!",
+          "date": "2025-08-26",
+          "verified": true,
+          "images": [
+            "https://picsum.photos/seed/rev4/300/300",
+            "https://picsum.photos/seed/rev5/300/300",
+            "https://picsum.photos/seed/rev6/300/300",
+            "https://picsum.photos/seed/rev7/300/300"
+          ],
+          "likes": 23
+        },
+        {
+          "userName": "Ankit",
+          "rating": 4,
+          "review": "Great quality, worth buying!",
+          "date": "2025-10-01",
+          "verified": true,
+          "images": [
+            "https://picsum.photos/seed/rev5/300/300",
+            "https://picsum.photos/seed/rev6/300/300",
+            "https://picsum.photos/seed/rev7/300/300",
+            "https://picsum.photos/seed/rev8/300/300"
+          ],
+          "likes": 26
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Japanese Mini Mixer Grinder - Electric grinder",
+      "description": "Experience the perfect blend of power and precision with the Japanese Mixer Grinder, designed to make your cooking experience faster and easier. From grinding spices to blending ingredients, this versatile grinder delivers high performance in a compact design, making it an essential kitchen tool for every home.",
+      "originalPrice": 999,
+      "salePrice": 699,
+      "discount": "-30%",
+      "category": "Household",
+      "categoryId": 12,
+      "inStock": true,
+      "isFavourite": false,
+      "images": [
+        "/products/Product7/1.png",
+        "/products/Product7/2.png",
+        "/products/Product7/3.png",
+        "/products/Product7/4.png"
+      ],
+      "estimatedDeliveryDays": 3,
+      "shipping": {
+        "type": "flat",
+        "charge": 79
+      },
+      "gstPercent": 5,
+      "reviews": [
+        {
+          "userName": "Rahul",
+          "rating": 5,
+          "review": "Great quality, worth buying!",
+          "date": "2025-12-28",
+          "verified": false,
+          "images": [
+            "https://picsum.photos/seed/rev4/300/300",
+            "https://picsum.photos/seed/rev5/300/300",
+            "https://picsum.photos/seed/rev6/300/300",
+            "https://picsum.photos/seed/rev7/300/300"
+          ],
+          "likes": 35
+        },
+        {
+          "userName": "Karan",
+          "rating": 5,
+          "review": "Great quality, worth buying!",
+          "date": "2025-11-08",
+          "verified": false,
+          "images": [
+            "https://picsum.photos/seed/rev5/300/300",
+            "https://picsum.photos/seed/rev6/300/300",
+            "https://picsum.photos/seed/rev7/300/300",
+            "https://picsum.photos/seed/rev8/300/300"
+          ],
+          "likes": 15
+        },
+        {
+          "userName": "Karan",
+          "rating": 4,
+          "review": "Great quality, worth buying!",
+          "date": "2025-09-03",
+          "verified": true,
+          "images": [
+            "https://picsum.photos/seed/rev6/300/300",
+            "https://picsum.photos/seed/rev7/300/300",
+            "https://picsum.photos/seed/rev8/300/300",
+            "https://picsum.photos/seed/rev9/300/300"
+          ],
+          "likes": 4
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "title": "Water Soak Absorbent Bathroom Mat and Door Mat Pack of 1",
+      "description": "High Absorbency: Ultra-absorbent material quickly soaks up water, keeping your bathroom floor dry and safe from slips.Fast Drying: Dries rapidly to prevent mold and mildew buildup, ensuring a clean and hygienic environment.Soft and Comfortable: Provides a plush, soft feel underfoot, adding a touch of comfort to your bathroom or entryway.Non-Slip Backing: Equipped with a non-slip rubber backing that keeps the mat securely in place, reducing the risk of accidents.",
+      "originalPrice": 599,
+      "salePrice": 499,
+      "discount": "-29%",
+      "category": "Household",
+      "categoryId": 1,
+      "inStock": true,
+      "isFavourite": true,
+      "images": [
+        "/products/Product14/1.png",
+        "/products/Product14/2.png",
+        "/products/Product14/3.png",
+        "/products/Product14/4.png"
+      ],
+      "estimatedDeliveryDays": 3,
+      "shipping": {
+        "type": "free",
+        "charge": 0
+      },
+      "gstPercent": 5,
+      "reviews": [
+        {
+          "userName": "Ankit",
+          "rating": 3,
+          "review": "Great quality, worth buying!",
+          "date": "2026-02-04",
+          "verified": false,
+          "images": [
+            "https://picsum.photos/seed/rev5/300/300",
+            "https://picsum.photos/seed/rev6/300/300",
+            "https://picsum.photos/seed/rev7/300/300",
+            "https://picsum.photos/seed/rev8/300/300"
+          ],
+          "likes": 31
+        },
+        {
+          "userName": "Karan",
+          "rating": 4,
+          "review": "Great quality, worth buying!",
+          "date": "2025-11-20",
+          "verified": true,
+          "images": [
+            "https://picsum.photos/seed/rev6/300/300",
+            "https://picsum.photos/seed/rev7/300/300",
+            "https://picsum.photos/seed/rev8/300/300",
+            "https://picsum.photos/seed/rev9/300/300"
+          ],
+          "likes": 23
+        },
+        {
+          "userName": "Ankit",
+          "rating": 3,
+          "review": "Great quality, worth buying!",
+          "date": "2025-10-15",
+          "verified": true,
+          "images": [
+            "https://picsum.photos/seed/rev7/300/300",
+            "https://picsum.photos/seed/rev8/300/300",
+            "https://picsum.photos/seed/rev9/300/300",
+            "https://picsum.photos/seed/rev10/300/300"
+          ],
+          "likes": 4
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "title": "Integrated Direct Spray Gun Suitable For Spray Gun For Car Wash and Gardening Water",
+      "description": "Dual Functionality: Versatile design for both car washing and gardening tasks, allowing you to switch between different applications easily.High-Pressure Performance: Delivers powerful and consistent water pressure for efficient cleaning and watering.Adjustable Spray Modes: Features multiple spray settings, including jet, shower, and mist, to cater to various needs and preferences.Ergonomic Handle: Designed with a comfortable, non-slip grip for extended use without strain.Durable Construction: Made from high-quality, weather-resistant materials to ensure longevity and withstand outdoor conditions.Easy to Connect: Fits standard garden hoses and car wash hoses, making it simple to attach and use with existing equipment.Integrated Design: Combines the spray gun and hose connector into a single unit, reducing the need for additional attachments and clutter.Water Control: Includes a convenient on/off switch for precise water flow control, preventing wastage and offering more control during use.Compact and Lightweight: Easy to handle and store, making it perfect for both small and large cleaning and watering tasks.Efficient Water Usage: Engineered to minimize water wastage while maximizing cleaning and watering efficiency",
+      "originalPrice": 799,
+      "salePrice": 499,
+      "discount": "-20%",
+      "category": "Household",
+      "categoryId": 5,
+      "inStock": true,
+      "isFavourite": true,
+      "images": [
+        "/products/Product6/1.png",
+        "/products/Product6/2.png",
+        "/products/Product6/3.png",
+        "/products/Product6/4.png"
+      ],
+      "estimatedDeliveryDays": 3,
+      "shipping": {
+        "type": "zone",
+        "zones": [
+          {
+            "zone": "local",
+            "charge": 49
+          },
+          {
+            "zone": "national",
+            "charge": 109
+          }
+        ]
+      },
+      "gstPercent": 18,
+      "reviews": [
+        {
+          "userName": "Priya",
+          "rating": 4,
+          "review": "Great quality, worth buying!",
+          "date": "2025-08-27",
+          "verified": true,
+          "images": [
+            "https://picsum.photos/seed/rev6/300/300",
+            "https://picsum.photos/seed/rev7/300/300",
+            "https://picsum.photos/seed/rev8/300/300",
+            "https://picsum.photos/seed/rev9/300/300"
+          ],
+          "likes": 32
+        },
+        {
+          "userName": "Neha",
+          "rating": 4,
+          "review": "Great quality, worth buying!",
+          "date": "2026-01-05",
+          "verified": true,
+          "images": [
+            "https://picsum.photos/seed/rev7/300/300",
+            "https://picsum.photos/seed/rev8/300/300",
+            "https://picsum.photos/seed/rev9/300/300",
+            "https://picsum.photos/seed/rev10/300/300"
+          ],
+          "likes": 4
+        },
+        {
+          "userName": "Ankit",
+          "rating": 4,
+          "review": "Great quality, worth buying!",
+          "date": "2025-05-03",
+          "verified": true,
+          "images": [
+            "https://picsum.photos/seed/rev8/300/300",
+            "https://picsum.photos/seed/rev9/300/300",
+            "https://picsum.photos/seed/rev10/300/300",
+            "https://picsum.photos/seed/rev11/300/300"
+          ],
+          "likes": 0
+        },
+        {
+          "userName": "Ankit",
+          "rating": 4,
+          "review": "Great quality, worth buying!",
+          "date": "2025-09-20",
+          "verified": true,
+          "images": [
+            "https://picsum.photos/seed/rev9/300/300",
+            "https://picsum.photos/seed/rev10/300/300",
+            "https://picsum.photos/seed/rev11/300/300",
+            "https://picsum.photos/seed/rev12/300/300"
+          ],
+          "likes": 23
+        },
+        {
+          "userName": "Sneha",
+          "rating": 3,
+          "review": "Great quality, worth buying!",
+          "date": "2025-05-03",
+          "verified": true,
+          "images": [
+            "https://picsum.photos/seed/rev10/300/300",
+            "https://picsum.photos/seed/rev11/300/300",
+            "https://picsum.photos/seed/rev12/300/300",
+            "https://picsum.photos/seed/rev13/300/300"
+          ],
+          "likes": 36
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "title": "120 Watt Retractable Fast Car Charger",
+      "description": "Stay powered up wherever the road takes you with the 120W Retractable Car Charger, the ultimate solution for fast and efficient charging in your vehicle. This high-performance car charger is designed to handle all your charging needs, from mobile phones and tablets to laptops and other electronic devices. With its retractable cable and dual USB ports, it offers a clutter-free, seamless charging experience for both driver and passengers.Engineered for convenience and safety, the 120W charger provides ultra-fast charging, ensuring your devices are powered up in no time. The car to mobile charger is compatible with a wide range of devices, making it an ideal accessory for your car. Whether youâre commuting to work, heading on a road trip, or running daily errands, this fast charging car charger has got you covered.",
+      "originalPrice": 1999,
+      "salePrice": 1499,
+      "discount": "-26%",
+      "category": "Gadgets",
+      "categoryId": 5,
+      "inStock": true,
+      "isFavourite": true,
+      "images": [
+        "/products/Product2/1.png",
+        "/products/Product2/2.png",
+        "/products/Product2/3.png",
+        "/products/Product2/4.png"
+      ],
+      "estimatedDeliveryDays": 2,
+      "shipping": {
+        "type": "free",
+        "charge": 0
+      },
+      "gstPercent": 12,
+      "reviews": [
+        {
+          "userName": "Neha",
+          "rating": 4,
+          "review": "Great quality, worth buying!",
+          "date": "2026-01-02",
+          "verified": false,
+          "images": [
+            "https://picsum.photos/seed/rev7/300/300",
+            "https://picsum.photos/seed/rev8/300/300",
+            "https://picsum.photos/seed/rev9/300/300",
+            "https://picsum.photos/seed/rev10/300/300"
+          ],
+          "likes": 15
+        },
+        {
+          "userName": "Riya",
+          "rating": 3,
+          "review": "Great quality, worth buying!",
+          "date": "2026-01-04",
+          "verified": true,
+          "images": [
+            "https://picsum.photos/seed/rev8/300/300",
+            "https://picsum.photos/seed/rev9/300/300",
+            "https://picsum.photos/seed/rev10/300/300",
+            "https://picsum.photos/seed/rev11/300/300"
+          ],
+          "likes": 5
+        },
+        {
+          "userName": "Riya",
+          "rating": 3,
+          "review": "Great quality, worth buying!",
+          "date": "2026-01-12",
+          "verified": true,
+          "images": [
+            "https://picsum.photos/seed/rev9/300/300",
+            "https://picsum.photos/seed/rev10/300/300",
+            "https://picsum.photos/seed/rev11/300/300",
+            "https://picsum.photos/seed/rev12/300/300"
+          ],
+          "likes": 35
+        },
+        {
+          "userName": "Rahul",
+          "rating": 5,
+          "review": "Great quality, worth buying!",
+          "date": "2025-06-13",
+          "verified": true,
+          "images": [
+            "https://picsum.photos/seed/rev10/300/300",
+            "https://picsum.photos/seed/rev11/300/300",
+            "https://picsum.photos/seed/rev12/300/300",
+            "https://picsum.photos/seed/rev13/300/300"
+          ],
+          "likes": 48
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "title": "Adjustable Aluminum Laptop Stand - Portable Ergonomic Foldable Laptop Holder",
+      "description": "Elevate your workspace with the Adjustable Aluminum Laptop Stand, designed to provide comfort, flexibility, and style. Whether you're working from home, at the office, or on the go, this portable laptop holder ensures the perfect viewing angle, reducing strain on your neck and improving posture.",
+      "originalPrice": 999,
+      "salePrice": 499,
+      "discount": "-34%",
+      "category": "Gadgets",
+      "categoryId": 12,
+      "inStock": true,
+      "isFavourite": false,
+      "images": [
+        "/products/Product3/1.png",
+        "/products/Product3/2.png",
+        "/products/Product3/3.png",
+        "/products/Product3/4.png"
+      ],
+      "estimatedDeliveryDays": 5,
+      "shipping": {
+        "type": "flat",
+        "charge": 127
+      },
+      "gstPercent": 5,
+      "reviews": [
+        {
+          "userName": "Karan",
+          "rating": 5,
+          "review": "Great quality, worth buying!",
+          "date": "2026-01-25",
+          "verified": true,
+          "images": [
+            "https://picsum.photos/seed/rev8/300/300",
+            "https://picsum.photos/seed/rev9/300/300",
+            "https://picsum.photos/seed/rev10/300/300",
+            "https://picsum.photos/seed/rev11/300/300"
+          ],
+          "likes": 2
+        },
+        {
+          "userName": "Priya",
+          "rating": 5,
+          "review": "Great quality, worth buying!",
+          "date": "2025-11-23",
+          "verified": false,
+          "images": [
+            "https://picsum.photos/seed/rev9/300/300",
+            "https://picsum.photos/seed/rev10/300/300",
+            "https://picsum.photos/seed/rev11/300/300",
+            "https://picsum.photos/seed/rev12/300/300"
+          ],
+          "likes": 2
+        },
+        {
+          "userName": "Amit",
+          "rating": 5,
+          "review": "Great quality, worth buying!",
+          "date": "2025-11-22",
+          "verified": false,
+          "images": [
+            "https://picsum.photos/seed/rev10/300/300",
+            "https://picsum.photos/seed/rev11/300/300",
+            "https://picsum.photos/seed/rev12/300/300",
+            "https://picsum.photos/seed/rev13/300/300"
+          ],
+          "likes": 18
+        },
+        {
+          "userName": "Sneha",
+          "rating": 5,
+          "review": "Great quality, worth buying!",
+          "date": "2026-03-25",
+          "verified": false,
+          "images": [
+            "https://picsum.photos/seed/rev11/300/300",
+            "https://picsum.photos/seed/rev12/300/300",
+            "https://picsum.photos/seed/rev13/300/300",
+            "https://picsum.photos/seed/rev14/300/300"
+          ],
+          "likes": 4
+        },
+        {
+          "userName": "Sneha",
+          "rating": 5,
+          "review": "Great quality, worth buying!",
+          "date": "2026-03-21",
+          "verified": true,
+          "images": [
+            "https://picsum.photos/seed/rev12/300/300",
+            "https://picsum.photos/seed/rev13/300/300",
+            "https://picsum.photos/seed/rev14/300/300",
+            "https://picsum.photos/seed/rev15/300/300"
+          ],
+          "likes": 22
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "title": "3 in 1 Portable Car Vacuum Cleaner with Blower",
+      "description": "Keep your vehicleâs interior spotless with the versatile 3-in-1 Portable Car Vacuum Cleaner with Blower. This compact and powerful cleaning tool combines vacuuming, blowing, and inflating functions in one, making it the perfect all-in-one solution for maintaining your carâs cleanliness.",
+      "originalPrice": 999,
+      "salePrice": 699,
+      "discount": "-23%",
+      "category": "Gadgets",
+      "categoryId": 7,
+      "inStock": false,
+      "isFavourite": true,
+      "images": [
+        "/products/Product1/1.png",
+        "/products/Product1/2.png",
+        "/products/Product1/3.png",
+        "/products/Product1/4.png"
+      ],
+      "estimatedDeliveryDays": 2,
+      "shipping": {
+        "type": "zone",
+        "zones": [
+          {
+            "zone": "local",
+            "charge": 64
+          },
+          {
+            "zone": "national",
+            "charge": 183
+          }
+        ]
+      },
+      "gstPercent": 18,
+      "reviews": [
+        {
+          "userName": "Karan",
+          "rating": 3,
+          "review": "Great quality, worth buying!",
+          "date": "2025-08-08",
+          "verified": false,
+          "images": [
+            "https://picsum.photos/seed/rev9/300/300",
+            "https://picsum.photos/seed/rev10/300/300",
+            "https://picsum.photos/seed/rev11/300/300",
+            "https://picsum.photos/seed/rev12/300/300"
+          ],
+          "likes": 46
+        },
+        {
+          "userName": "Rahul",
+          "rating": 5,
+          "review": "Great quality, worth buying!",
+          "date": "2026-03-25",
+          "verified": false,
+          "images": [
+            "https://picsum.photos/seed/rev10/300/300",
+            "https://picsum.photos/seed/rev11/300/300",
+            "https://picsum.photos/seed/rev12/300/300",
+            "https://picsum.photos/seed/rev13/300/300"
+          ],
+          "likes": 4
+        },
+        {
+          "userName": "Neha",
+          "rating": 4,
+          "review": "Great quality, worth buying!",
+          "date": "2025-09-22",
+          "verified": false,
+          "images": [
+            "https://picsum.photos/seed/rev11/300/300",
+            "https://picsum.photos/seed/rev12/300/300",
+            "https://picsum.photos/seed/rev13/300/300",
+            "https://picsum.photos/seed/rev14/300/300"
+          ],
+          "likes": 38
+        },
+        {
+          "userName": "Karan",
+          "rating": 3,
+          "review": "Great quality, worth buying!",
+          "date": "2025-07-03",
+          "verified": false,
+          "images": [
+            "https://picsum.photos/seed/rev12/300/300",
+            "https://picsum.photos/seed/rev13/300/300",
+            "https://picsum.photos/seed/rev14/300/300",
+            "https://picsum.photos/seed/rev15/300/300"
+          ],
+          "likes": 22
+        },
+        {
+          "userName": "Sneha",
+          "rating": 3,
+          "review": "Great quality, worth buying!",
+          "date": "2025-07-14",
+          "verified": false,
+          "images": [
+            "https://picsum.photos/seed/rev13/300/300",
+            "https://picsum.photos/seed/rev14/300/300",
+            "https://picsum.photos/seed/rev15/300/300",
+            "https://picsum.photos/seed/rev16/300/300"
+          ],
+          "likes": 50
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "title": "Digital Table Alarm Clock for Students Home Office Corporate with Automatic Sensor Date and Temperature",
+      "description": "Modern Design: Sleek, contemporary design that fits seamlessly into any student desk, home office, or corporate setting.Digital Display: Large, easy-to-read digital screen shows time, date, and temperature at a glance, enhancing visibility and convenience.Automatic Sensor: Built-in sensor automatically displays the current date and temperature, providing accurate and real-time information.Customizable Alarm: Features a versatile alarm function with adjustable settings to wake you up on time, tailored to your preferences.Snooze Feature: Includes a snooze button to grant a few extra minutes of rest before the alarm sounds again, perfect for hitting the snooze button.Temperature Display: Monitors and displays the current room temperature, helping you stay comfortable in any environment.Date Display: Automatically updates the date, making it easy to keep track of your schedule and appointments.",
+      "originalPrice": 899,
+      "salePrice": 475,
+      "discount": "-23%",
+      "category": "Gifts",
+      "categoryId": 7,
+      "inStock": true,
+      "isFavourite": false,
+      "images": [
+        "/products/Product5/1.png",
+        "/products/Product5/2.png",
+        "/products/Product5/3.png",
+        "/products/Product5/4.png"
+      ],
+      "estimatedDeliveryDays": 7,
+      "shipping": {
+        "type": "free",
+        "charge": 0
+      },
+      "gstPercent": 18,
+      "reviews": [
+        {
+          "userName": "Sneha",
+          "rating": 3,
+          "review": "Great quality, worth buying!",
+          "date": "2026-03-15",
+          "verified": false,
+          "images": [
+            "https://picsum.photos/seed/rev10/300/300",
+            "https://picsum.photos/seed/rev11/300/300",
+            "https://picsum.photos/seed/rev12/300/300",
+            "https://picsum.photos/seed/rev13/300/300"
+          ],
+          "likes": 32
+        },
+        {
+          "userName": "Rahul",
+          "rating": 4,
+          "review": "Great quality, worth buying!",
+          "date": "2025-08-29",
+          "verified": false,
+          "images": [
+            "https://picsum.photos/seed/rev11/300/300",
+            "https://picsum.photos/seed/rev12/300/300",
+            "https://picsum.photos/seed/rev13/300/300",
+            "https://picsum.photos/seed/rev14/300/300"
+          ],
+          "likes": 20
+        },
+        {
+          "userName": "Ankit",
+          "rating": 5,
+          "review": "Great quality, worth buying!",
+          "date": "2025-07-04",
+          "verified": false,
+          "images": [
+            "https://picsum.photos/seed/rev12/300/300",
+            "https://picsum.photos/seed/rev13/300/300",
+            "https://picsum.photos/seed/rev14/300/300",
+            "https://picsum.photos/seed/rev15/300/300"
+          ],
+          "likes": 12
+        },
+        {
+          "userName": "Amit",
+          "rating": 4,
+          "review": "Great quality, worth buying!",
+          "date": "2026-03-22",
+          "verified": true,
+          "images": [
+            "https://picsum.photos/seed/rev13/300/300",
+            "https://picsum.photos/seed/rev14/300/300",
+            "https://picsum.photos/seed/rev15/300/300",
+            "https://picsum.photos/seed/rev16/300/300"
+          ],
+          "likes": 27
+        },
+        {
+          "userName": "Amit",
+          "rating": 3,
+          "review": "Great quality, worth buying!",
+          "date": "2025-07-02",
+          "verified": false,
+          "images": [
+            "https://picsum.photos/seed/rev14/300/300",
+            "https://picsum.photos/seed/rev15/300/300",
+            "https://picsum.photos/seed/rev16/300/300",
+            "https://picsum.photos/seed/rev17/300/300"
+          ],
+          "likes": 20
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "title": "Twin Bell Analog Display Table Alarm Clock With Night Led Light",
+      "description": "Classic Design: Features a timeless twin bell design with a vintage appeal, adding charm to any bedroom or office.Loud Alarm: Equipped with a powerful, loud bell alarm to ensure you wake up on time, even for heavy sleepers.Easy-to-Set Time: Simple dial controls for setting the time and alarm with precision, making it user-friendly.Analog Display: Clear, easy-to-read analog clock face with bold numerals and minute markings for quick time checks.Durable Construction: Built with high-quality materials for long-lasting use and reliable performance.Snooze Function: Includes a convenient snooze button, allowing for a few extra minutes of sleep before the alarm rings again.Silent Sweep Movement: Smooth, silent second hand movement prevents annoying ticking sounds, ideal for a peaceful nightâs sleep.",
+      "originalPrice": 499,
+      "salePrice": 499,
+      "discount": "-40%",
+      "category": "Gifts",
+      "categoryId": 3,
+      "inStock": false,
+      "isFavourite": true,
+      "images": [
+        "/products/Product13/1.png",
+        "/products/Product13/2.png",
+        "/products/Product13/3.png",
+        "/products/Product13/4.png"
+      ],
+      "estimatedDeliveryDays": 2,
+      "shipping": {
+        "type": "zone",
+        "zones": [
+          {
+            "zone": "local",
+            "charge": 76
+          },
+          {
+            "zone": "national",
+            "charge": 114
+          }
+        ]
+      },
+      "gstPercent": 5,
+      "reviews": [
+        {
+          "userName": "Amit",
+          "rating": 4,
+          "review": "Great quality, worth buying!",
+          "date": "2025-06-27",
+          "verified": true,
+          "images": [
+            "https://picsum.photos/seed/rev11/300/300",
+            "https://picsum.photos/seed/rev12/300/300",
+            "https://picsum.photos/seed/rev13/300/300",
+            "https://picsum.photos/seed/rev14/300/300"
+          ],
+          "likes": 46
+        },
+        {
+          "userName": "Priya",
+          "rating": 4,
+          "review": "Great quality, worth buying!",
+          "date": "2025-10-14",
+          "verified": true,
+          "images": [
+            "https://picsum.photos/seed/rev12/300/300",
+            "https://picsum.photos/seed/rev13/300/300",
+            "https://picsum.photos/seed/rev14/300/300",
+            "https://picsum.photos/seed/rev15/300/300"
+          ],
+          "likes": 29
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "title": "Temperature Water Bottle Display Vacuum Insulated Multicolor Pack of 1",
+      "description": "Stainless Steel Bottle: Crafted from high-quality stainless steel, this bottle is designed to be durable and resistant to rust, making it the perfect companion for everyday use.Water Temperature Sensor: Equipped with a smart water temperature sensor, this bottle displays the current temperature of your drink with just a touch. Whether it's hot or cold, youâll always be in the know.Hot Temperature Retention: Thanks to its vacuum insulation technology, this Stainless ml bottle keeps your beverages hot for up to 12 hours and cold for up to 24 hours, ensuring you enjoy every sip at the ideal temperature.Temperature with Name: Personalize your bottle with your name, making it a unique accessory for school, work, or outdoor adventures. This feature is particularly great as a Temperature for Kids bottle, helping little ones keep track of their belongings.Water Indicator: The digital display not only shows the temperature but also acts as a water indicator, reminding you to stay hydrated throughout the day.Temperature Bottle 500 ml: With a convenient 500 ml capacity, this bottle is the perfect size to carry with you wherever you go, whether itâs to the gym, office, or on a hike.Stainless Steel Durability: Made from robust stainless steel, this bottle is built to last, ensuring it remains a staple in your daily routine.",
+      "originalPrice": 499,
+      "salePrice": 499,
+      "discount": "-39%",
+      "category": "Gifts",
+      "categoryId": 9,
+      "inStock": true,
+      "isFavourite": false,
+      "images": [
+        "/products/Product12/1.png",
+        "/products/Product12/2.png",
+        "/products/Product12/3.png",
+        "/products/Product12/4.png"
+      ],
+      "estimatedDeliveryDays": 5,
+      "shipping": {
+        "type": "free",
+        "charge": 0
+      },
+      "gstPercent": 12,
+      "reviews": [
+        {
+          "userName": "Priya",
+          "rating": 4,
+          "review": "Great quality, worth buying!",
+          "date": "2025-07-02",
+          "verified": true,
+          "images": [
+            "https://picsum.photos/seed/rev12/300/300",
+            "https://picsum.photos/seed/rev13/300/300",
+            "https://picsum.photos/seed/rev14/300/300",
+            "https://picsum.photos/seed/rev15/300/300"
+          ],
+          "likes": 19
+        },
+        {
+          "userName": "Amit",
+          "rating": 5,
+          "review": "Great quality, worth buying!",
+          "date": "2025-07-09",
+          "verified": false,
+          "images": [
+            "https://picsum.photos/seed/rev13/300/300",
+            "https://picsum.photos/seed/rev14/300/300",
+            "https://picsum.photos/seed/rev15/300/300",
+            "https://picsum.photos/seed/rev16/300/300"
+          ],
+          "likes": 16
+        },
+        {
+          "userName": "Sneha",
+          "rating": 4,
+          "review": "Great quality, worth buying!",
+          "date": "2025-11-26",
+          "verified": true,
+          "images": [
+            "https://picsum.photos/seed/rev14/300/300",
+            "https://picsum.photos/seed/rev15/300/300",
+            "https://picsum.photos/seed/rev16/300/300",
+            "https://picsum.photos/seed/rev17/300/300"
+          ],
+          "likes": 15
+        },
+        {
+          "userName": "Riya",
+          "rating": 5,
+          "review": "Great quality, worth buying!",
+          "date": "2025-11-17",
+          "verified": false,
+          "images": [
+            "https://picsum.photos/seed/rev15/300/300",
+            "https://picsum.photos/seed/rev16/300/300",
+            "https://picsum.photos/seed/rev17/300/300",
+            "https://picsum.photos/seed/rev18/300/300"
+          ],
+          "likes": 42
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "title": "Wine Bottle Umbrella Multicolor Pack of 1",
+      "description": "Designed for convenience and style, the Mini Capsule Umbrella is the ultimate travel accessory. Compact, lightweight, and easy to carry, it provides reliable protection from rain or sun wherever you go. Whether you're on a road trip, commuting to work, or enjoying a day out, this umbrella fits seamlessly into your car, bag, or pocket.",
+      "originalPrice": 499,
+      "salePrice": 399,
+      "discount": "-32%",
+      "category": "Gifts",
+      "categoryId": 4,
+      "inStock": true,
+      "isFavourite": false,
+      "images": [
+        "/products/Product15/1.png",
+        "/products/Product15/2.png",
+        "/products/Product15/3.png",
+        "/products/Product15/4.png"
+      ],
+      "estimatedDeliveryDays": 6,
+      "shipping": {
+        "type": "zone",
+        "zones": [
+          {
+            "zone": "local",
+            "charge": 64
+          },
+          {
+            "zone": "national",
+            "charge": 117
+          }
+        ]
+      },
+      "gstPercent": 18,
+      "reviews": [
+        {
+          "userName": "Ankit",
+          "rating": 4,
+          "review": "Great quality, worth buying!",
+          "date": "2025-06-29",
+          "verified": false,
+          "images": [
+            "https://picsum.photos/seed/rev13/300/300",
+            "https://picsum.photos/seed/rev14/300/300",
+            "https://picsum.photos/seed/rev15/300/300",
+            "https://picsum.photos/seed/rev16/300/300"
+          ],
+          "likes": 5
+        },
+        {
+          "userName": "Priya",
+          "rating": 3,
+          "review": "Great quality, worth buying!",
+          "date": "2025-11-29",
+          "verified": true,
+          "images": [
+            "https://picsum.photos/seed/rev14/300/300",
+            "https://picsum.photos/seed/rev15/300/300",
+            "https://picsum.photos/seed/rev16/300/300",
+            "https://picsum.photos/seed/rev17/300/300"
+          ],
+          "likes": 27
+        },
+        {
+          "userName": "Riya",
+          "rating": 3,
+          "review": "Great quality, worth buying!",
+          "date": "2025-04-24",
+          "verified": false,
+          "images": [
+            "https://picsum.photos/seed/rev15/300/300",
+            "https://picsum.photos/seed/rev16/300/300",
+            "https://picsum.photos/seed/rev17/300/300",
+            "https://picsum.photos/seed/rev18/300/300"
+          ],
+          "likes": 15
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "title": "Mini Capsule Umbrella Perfect for Travel and Car Use",
+      "description": " Designed for convenience and style, the Mini Capsule Umbrella is the ultimate travel accessory. Compact, lightweight, and easy to carry, it provides reliable protection from rain or sun wherever you go. Whether you're on a road trip, commuting to work, or enjoying a day out, this umbrella fits seamlessly into your car, bag, or pocket.",
+      "originalPrice": 699,
+      "salePrice": 399,
+      "discount": "-36%",
+      "category": "Gifts",
+      "categoryId": 1,
+      "inStock": false,
+      "isFavourite": true,
+      "images": [
+        "/products/Product8/1.png",
+        "/products/Product8/2.png",
+        "/products/Product8/3.png",
+        "/products/Product8/4.png"
+      ],
+      "estimatedDeliveryDays": 3,
+      "shipping": {
+        "type": "free",
+        "charge": 0
+      },
+      "gstPercent": 12,
+      "reviews": [
+        {
+          "userName": "Sneha",
+          "rating": 4,
+          "review": "Great quality, worth buying!",
+          "date": "2025-11-24",
+          "verified": true,
+          "images": [
+            "https://picsum.photos/seed/rev14/300/300",
+            "https://picsum.photos/seed/rev15/300/300",
+            "https://picsum.photos/seed/rev16/300/300",
+            "https://picsum.photos/seed/rev17/300/300"
+          ],
+          "likes": 3
+        },
+        {
+          "userName": "Karan",
+          "rating": 5,
+          "review": "Great quality, worth buying!",
+          "date": "2025-04-20",
+          "verified": false,
+          "images": [
+            "https://picsum.photos/seed/rev15/300/300",
+            "https://picsum.photos/seed/rev16/300/300",
+            "https://picsum.photos/seed/rev17/300/300",
+            "https://picsum.photos/seed/rev18/300/300"
+          ],
+          "likes": 14
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "title": "Room-Wall Hangings for Home/Wall Decoration Items for Living Room-Wall Art-Bedroom Wall Decor",
+      "description": "Eco-Friendly Wall DÃ©cor for Living Room - Elegant and Sustainable Decoration.Transform your living space with this beautiful Eco-Friendly Wall DÃ©cor, designed to add charm and warmth to your home. Perfect for your living room, bedroom, or office, this piece combines aesthetic appeal with sustainability, making it ideal for eco-conscious decor enthusiasts.",
+      "originalPrice": 699,
+      "salePrice": 499,
+      "discount": "-28%",
+      "category": "Home Decor",
+      "categoryId": 8,
+      "inStock": true,
+      "isFavourite": true,
+      "images": [
+        "/products/Product11/1.png",
+        "/products/Product11/2.png",
+        "/products/Product11/3.png",
+        "/products/Product11/4.png"
+      ],
+      "estimatedDeliveryDays": 6,
+      "shipping": {
+        "type": "zone",
+        "zones": [
+          {
+            "zone": "local",
+            "charge": 45
+          },
+          {
+            "zone": "national",
+            "charge": 177
+          }
+        ]
+      },
+      "gstPercent": 12,
+      "reviews": [
+        {
+          "userName": "Riya",
+          "rating": 5,
+          "review": "Great quality, worth buying!",
+          "date": "2025-08-27",
+          "verified": false,
+          "images": [
+            "https://picsum.photos/seed/rev15/300/300",
+            "https://picsum.photos/seed/rev16/300/300",
+            "https://picsum.photos/seed/rev17/300/300",
+            "https://picsum.photos/seed/rev18/300/300"
+          ],
+          "likes": 8
+        },
+        {
+          "userName": "Neha",
+          "rating": 3,
+          "review": "Great quality, worth buying!",
+          "date": "2026-02-12",
+          "verified": false,
+          "images": [
+            "https://picsum.photos/seed/rev16/300/300",
+            "https://picsum.photos/seed/rev17/300/300",
+            "https://picsum.photos/seed/rev18/300/300",
+            "https://picsum.photos/seed/rev19/300/300"
+          ],
+          "likes": 19
+        },
+        {
+          "userName": "Rahul",
+          "rating": 4,
+          "review": "Great quality, worth buying!",
+          "date": "2025-09-24",
+          "verified": false,
+          "images": [
+            "https://picsum.photos/seed/rev17/300/300",
+            "https://picsum.photos/seed/rev18/300/300",
+            "https://picsum.photos/seed/rev19/300/300",
+            "https://picsum.photos/seed/rev20/300/300"
+          ],
+          "likes": 23
+        },
+        {
+          "userName": "Amit",
+          "rating": 5,
+          "review": "Great quality, worth buying!",
+          "date": "2025-06-26",
+          "verified": true,
+          "images": [
+            "https://picsum.photos/seed/rev18/300/300",
+            "https://picsum.photos/seed/rev19/300/300",
+            "https://picsum.photos/seed/rev20/300/300",
+            "https://picsum.photos/seed/rev21/300/300"
+          ],
+          "likes": 46
+        }
+      ]
+    }
+  ]
+}
