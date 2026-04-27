@@ -6,7 +6,7 @@ import { Transaction, TransactionSchema } from './schema/transaction.schema';
 import { WalletModule } from '../wallet/wallet.module';
 import { Wallet, WalletSchema } from '../wallet/schema/wallet.schema';
 import { OrderSchema } from 'src/order/order.schema/order.schema';
-import { RazorpayModule } from 'src/razorpay/razorpay.module';
+import { RazorpayService } from './razorpay.service';
 
 @Module({
   imports: [
@@ -18,10 +18,12 @@ import { RazorpayModule } from 'src/razorpay/razorpay.module';
       { name: Wallet.name, schema: WalletSchema },
     ]),
     forwardRef(() => WalletModule),
-    RazorpayModule, // ✅ correct usage
   ],
-  providers: [TransactionService],
+  providers: [
+    TransactionService,
+    RazorpayService, // ✅ ADD THIS
+  ],
   controllers: [TransactionController],
-  exports: [TransactionService], // ✅ FIXED
+  exports: [TransactionService],
 })
 export class TransactionModule {}

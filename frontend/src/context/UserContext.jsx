@@ -1,4 +1,5 @@
 import { createContext, useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 
 const initializeAuth = ()=>{
@@ -14,6 +15,7 @@ export const AuthProvider = ({children})=>{
     const [user,setUser] = useState(userData || null)
     const [token,setToken] = useState(userToken || null)
     const [isLoggedIn,setIsLoggedIn] = useState(userToken ? true : false)
+    const navigate = useNavigate()
 
     const loggedInUser = (loginUser,loginUserToken)=>{
           if(loginUser && loginUserToken){
@@ -31,6 +33,7 @@ export const AuthProvider = ({children})=>{
         setIsLoggedIn(false)
         setUser(null)
         setToken(null)
+        navigate("/login")
     }
 
     return (

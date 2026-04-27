@@ -5,10 +5,14 @@ import { UserController } from './user.controller';
 import { UserSchema } from './user.schema/user.schema';
 import { AuthModule } from 'src/auth/auth.module';
 import { Address, AddressSchema } from './user.schema/address.schema';
+import { OrderSchema } from 'src/order/order.schema/order.schema';
+import { WishListSchema } from 'src/wishlist/wishlist.schema/wishlist.schema';
 
 @Module({
   imports: [
-    MongooseModule.forFeature([{ name: 'User', schema: UserSchema }]), 
+    MongooseModule.forFeature([{ name: 'User', schema: UserSchema }]),
+    MongooseModule.forFeature([{ name: 'Order', schema: OrderSchema }]),
+    MongooseModule.forFeature([{ name: 'Wishlist', schema: WishListSchema }]),
     MongooseModule.forFeature([{ name: Address.name, schema: AddressSchema }]), 
     forwardRef(() => AuthModule),
   ],

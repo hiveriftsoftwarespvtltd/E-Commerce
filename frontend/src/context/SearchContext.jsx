@@ -20,10 +20,8 @@ export const SearchProvider = ({ children }) => {
         // const data = await res.json();
         const response = await api.get("/product-detail")
 
-        console.log("🔥 ALL PRODUCTS LOADED:", response);
-
         // Store products globally
-        setAllWebsiteProducts(response.data.data || []);
+        setAllWebsiteProducts(response.data.result || []);
       } catch (err) {
         console.log("Product fetch error:", err);
       }

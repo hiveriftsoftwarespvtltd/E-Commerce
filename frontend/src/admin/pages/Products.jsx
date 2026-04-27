@@ -59,8 +59,8 @@ export default function Products() {
       .then((res) => res.json())
       .then((data) => {
         console.log("GET RESPONSE,,,,,,,,,,,:", data);
-        if (Array.isArray(data.data)) {
-          setProducts(data.data);
+        if (Array.isArray(data.result)) {
+          setProducts(data.result);
         }
         setLoading(false);
       })
@@ -198,7 +198,7 @@ export default function Products() {
 
     const data = await res.json();
 
-    if (data.message === "Product updated successfully") {
+    if (data.message === "Product updated") {
       alert("Product Updated!");
       setEditProduct(null);
       loadProducts();
@@ -536,7 +536,7 @@ export default function Products() {
               name="description"
               value={form.description}
               onChange={handleChange}
-              className="border rounded-md px-3 py-2 w-full"
+              className="border rounded-md px-3 py-2 w-full text-sm "
             />
           </div>
 

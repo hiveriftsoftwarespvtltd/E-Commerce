@@ -54,8 +54,7 @@ const handleSubmit = async (e) => {
     });
 
     const data = await response.json();
-    console.log("Response Data:", data);
-
+    
     if (response.ok && data.statusCode === 200) {
       const { access_token } = data.data;
       const { id, email, role } = data.data.user;

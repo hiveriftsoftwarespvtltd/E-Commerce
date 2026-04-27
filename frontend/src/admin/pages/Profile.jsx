@@ -13,10 +13,14 @@ import {
 } from "lucide-react";
 import BASE from "../../config";
 import Swal from "sweetalert2";
+import { api } from "@/utils/axios-interceptor";
+import { useAuth } from "@/context/UserContext";
 
 export default function Profile() {
   const [loading, setLoading] = useState(true);
   const [preview, setPreview] = useState(null);
+  const {user} = useAuth()
+  console.log("User in line 23",user)
 
   const [form, setForm] = useState({
     fullName: "",
@@ -42,8 +46,8 @@ export default function Profile() {
   // ================================
   // ☑️ FETCH USER PROFILE
   // ================================
-  useEffect(() => {
-    const fetchProfile = async () => {
+
+  const fetchProfile = async () => {
       try {
         const token = localStorage.getItem("token");
         if (!token) return (window.location.href = "/login");
@@ -68,13 +72,14 @@ export default function Profile() {
           username: user.username || user.userEmail?.split("@")[0] || "",
         });
 
-        if (user.profileImage) setPreview(user.profileImage);
+        if (user.userAvatarUrl) setPreview(user.userAvatarUrl);
       } catch {
         Swal.fire("Error", "Server Error! Please login again.", "error");
       } finally {
         setLoading(false);
       }
     };
+  useEffect(() => {
 
     fetchProfile();
   }, []);
@@ -120,6 +125,16 @@ export default function Profile() {
     }
   };
 
+  const updateProfileAvatar = async()=>{
+    try {
+      const formData = new FormData()
+      formData.append("file",)
+      const response = await api.post(`/user/upload-profile/${user.id}`,formData)
+    } catch (error) {
+      console.log("Update Profile Image Error",error)
+    }
+  }
+
   // ================================
   // 🖼️ IMAGE UPLOAD
   // ================================
@@ -133,19 +148,23 @@ export default function Profile() {
 
     const formData = new FormData();
     const token = localStorage.getItem("token");
-    formData.append("image", file);
+    formData.append("file", file);
 
     try {
-      const res = await fetch(`${BASE.PRODUCT_BASE}/profile/upload-image`, {
-        method: "POST",
-        headers: { Authorization: `Bearer ${token}` },
-        body: formData,
-      });
+      const response = await api.post(`/user/upload-profile/${user.id}`,formData)
+      // const res = await fetch(`${BASE.PRODUCT_BASE}/profile/upload-image`, {
+      //   method: "POST",
+      //   headers: { Authorization: `Bearer ${token}` },
+      //   body: formData,
+      // });
 
-      const data = await res.json();
-      if (!res.ok) return Swal.fire("Error", data.message, "error");
+      // const data = await res.json();
+      // if (!res.ok) return Swal.fire("Error", data.message, "error");
 
-      Swal.fire("Success", "Profile image updated!", "success");
+      // Swal.fire("Success", "Profile image updated!", "success");
+      if(response.data.success){
+        fetchProfile()
+      }
     } catch {
       Swal.fire("Error", "Image upload failed!", "error");
     }
@@ -227,7 +246,7 @@ export default function Profile() {
           <User className="w-5 h-5" /> Basic Information
         </h2>
 
-        <div>
+        {/* <div>
           <label className="text-sm">Full Name</label>
           <input
             name="fullName"
@@ -242,7 +261,7 @@ export default function Profile() {
           {errors.fullName && (
             <p className="text-red-500 text-xs">{errors.fullName}</p>
           )}
-        </div>
+        </div> */}
 
         <div>
           <label className="text-sm">Email</label>
@@ -253,7 +272,7 @@ export default function Profile() {
           />
         </div>
 
-        <div>
+        {/* <div>
           <label className="text-sm">Phone</label>
           <input
             name="phone"
@@ -268,7 +287,7 @@ export default function Profile() {
           {errors.phone && (
             <p className="text-red-500 text-xs">{errors.phone}</p>
           )}
-        </div>
+        </div> */}
 
         <div>
           <label className="text-sm">Username</label>
@@ -303,9 +322,9 @@ export default function Profile() {
 
         <div className="flex items-center gap-6">
           <div className="w-28 h-28 border rounded-md overflow-hidden bg-gray-100 flex items-center justify-center">
-            {preview ? (
+            {(preview || user.avatar) ? (
               <img
-                src={preview}
+                src={preview || user.avatar}
                 className="w-full h-full object-cover"
                 alt=""
               />

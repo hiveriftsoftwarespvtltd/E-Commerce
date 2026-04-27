@@ -10,6 +10,6 @@ import { WishListSchema } from './wishlist.schema/wishlist.schema';
   ])],
   providers: [WishlistService],
   controllers: [WishlistController],
-  exports:[MongooseModule]
+  exports:[WishlistService,MongooseModule]
 })
 export class WishlistModule {}

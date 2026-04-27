@@ -39,9 +39,17 @@ export class OrderService {
         shippingAddress: dto.shippingAddress,
         userLocation: { type: 'Point', coordinates: userLocation },
         status: 'pending',
+        contact: {
+    phone: dto.phone,
+    email: dto.email,
+  },
       });
 
-      return new CustomResponse(201, 'Order created successfully', newOrder);
+      const populatedOrder = await this.orderModel
+      .findById(newOrder._id)
+      .populate('user', '-password -__v');
+
+      return new CustomResponse(201, 'Order created successfully', populatedOrder);
 
     } catch (error: any) {
       throw error instanceof CustomError
@@ -54,16 +62,17 @@ export class OrderService {
     try {
       const orders = await this.orderModel
         .find()
-        .populate('user', 'name email')
+        .populate('user', 'userName userEmail')
         .sort({ createdAt: -1 })
         .lean();
+
 
       const formatted = orders.map((order: any) => ({
         _id: order._id,
         orderNumber: order.orderNumber,
         customer: {
-          name: order.user?.name || 'Unknown',
-          email: order.user?.email || 'N/A',
+          name: order.user?.userName || 'Unknown',
+          email: order.user?.userEmail || 'N/A',
         },
         itemsCount: order.items?.length || 0,
         totalAmount: order.totalAmount,
@@ -74,6 +83,21 @@ export class OrderService {
       }));
 
       return new CustomResponse(200, 'Orders fetched', formatted);
+
+    } catch (error: any) {
+      throw new CustomError(500, error.message);
+    }
+  }
+
+   async getUserOrders(userId:string) {
+    try {
+      const orders = await this.orderModel
+        .find({user:userId})
+        .sort({ createdAt: -1 })
+        .lean();
+
+
+      return new CustomResponse(200, 'Orders fetched', orders);
 
     } catch (error: any) {
       throw new CustomError(500, error.message);

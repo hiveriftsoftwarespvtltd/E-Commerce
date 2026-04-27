@@ -5,13 +5,27 @@
   export class TransactionController {
     constructor(private readonly transactionService: TransactionService) {}
 
-    @Post('createTrans')
-    async createTransaction(@Body() createTransactionDto: CreateTransactionDto) {
-      return this.transactionService.createTransaction(createTransactionDto);
-    }
+    // ✅ PAYMENT (RAZORPAY)
+  @Post('create-payment')
+  async createPayment(@Body() dto: CreateTransactionDto) {
+    return this.transactionService.createPayment(dto);
+  }
 
-    @Get('getTrans/history/:userId')
-    async getTransactionHistory(@Param('userId') userId: string) {
-      return this.transactionService.getTransactionHistory(userId);
-    }
+  // ✅ VERIFY PAYMENT
+  @Post('verify-payment')
+  async verifyPayment(@Body() dto: any) {
+    return this.transactionService.verifyPayment(dto);
+  }
+
+  // ✅ WALLET (rename to avoid confusion)
+  @Post('wallet')
+  async createWalletTransaction(@Body() dto: any) {
+    return this.transactionService.createTransaction(dto);
+  }
+
+  // ✅ HISTORY
+  @Get('history/:userId')
+  async getTransactionHistory(@Param('userId') userId: string) {
+    return this.transactionService.getTransactionHistory(userId);
+  }
   }

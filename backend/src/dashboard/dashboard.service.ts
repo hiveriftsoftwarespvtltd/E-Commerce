@@ -46,13 +46,15 @@ export class DashboardService {
           createdAt: { $gte: startOfDay, $lte: endOfDay },
         }),
         this.orderModel
-          .find()
-          .sort({ createdAt: -1 })
-          .limit(4)
-          .select('orderNumber totalAmount status createdAt'),
+  .find()
+  .populate("user")
+  .populate("items.productId") // ✅ correct nested populate
+  .sort({ createdAt: -1 })
+  .limit(4)
+  .select("orderNumber totalAmount status createdAt")
       ]);
 
-      const todaysSales = todayOrders.reduce(
+      const todaysSales = todayOrders.filter(item=>item.status === "processing").reduce(
         (sum, order) => sum + (order.totalAmount || 0),
         0,
       );

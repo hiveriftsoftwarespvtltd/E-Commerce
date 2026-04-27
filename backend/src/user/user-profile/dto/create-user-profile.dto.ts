@@ -9,7 +9,7 @@ import {
 export class CreateUserProfileDto {
   // @IsNotEmpty()
   // @IsMongoId()
-  userId: string;
+  userId!: string;
 
   @IsOptional()
   @IsString()

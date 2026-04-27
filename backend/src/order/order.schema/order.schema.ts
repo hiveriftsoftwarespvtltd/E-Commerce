@@ -151,6 +151,10 @@ export const OrderSchema = new Schema(
       enum: ['pending', 'processing', 'shipped', 'delivered', 'cancelled'],
       default: 'pending',
     },
+    contact:{
+      email:String,
+      phone:String
+    },
 
     trackingNumber: String,
 

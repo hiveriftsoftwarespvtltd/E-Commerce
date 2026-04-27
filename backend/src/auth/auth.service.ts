@@ -130,7 +130,7 @@ export class AuthService {
     return {
       statusCode: 200,
       message: 'Login successful',
-      data: { access_token: token, user: { id: user._id, email: user.userEmail, role: user.role },success:true },
+      data: { access_token: token, user: { id: user._id, email: user.userEmail, role: user.role,avatar:user.userAvatarUrl },success:true },
     };
   }
 

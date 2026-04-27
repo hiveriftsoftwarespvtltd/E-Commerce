@@ -1,13 +1,14 @@
 import React, { useState } from "react";
-import { ChevronDown } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import BASE from "../config/";
-// import fallbackImage from "../assets/jars.png";
 import fallbackImage from "../assets/accessories.png";
+import { useAuth } from "@/context/UserContext";
+import { api } from "@/utils/axios-interceptor";
+
 export default function Checkout() {
   const navigate = useNavigate();
-  const { cart } = useCart();
+  const { cart,clearCart } = useCart();
 
   const [form, setForm] = useState({
     email: "",
@@ -17,16 +18,16 @@ export default function Checkout() {
     address: "",
     apartment: "",
     city: "",
-    state: "Delhi",
+    state: "",
     pin: "",
     phone: "",
-    saveInfo: false,
     paymentMethod: "razorpay",
   });
 
   const [errors, setErrors] = useState({});
-
-  // ⭐ FORM VALIDATION
+  const [loading, setLoading] = useState(false);
+  const {user} = useAuth()
+  // ✅ VALIDATION
   const validateForm = () => {
     let newErrors = {};
 
@@ -39,7 +40,7 @@ export default function Checkout() {
     if (!form.pin.trim()) newErrors.pin = "PIN is required";
     else if (form.pin.length !== 6) newErrors.pin = "PIN must be 6 digits";
 
-    if (!form.phone.trim()) newErrors.phone = "Phone number is required";
+    if (!form.phone.trim()) newErrors.phone = "Phone is required";
     else if (form.phone.length !== 10)
       newErrors.phone = "Phone must be 10 digits";
 
@@ -47,138 +48,125 @@ export default function Checkout() {
     return Object.keys(newErrors).length === 0;
   };
 
-  // ⭐ PRICE CALCULATION
+  // ✅ PRICE
   const subtotal = cart.reduce(
-    (sum, item) => sum + item.price * item.quantity,
+    (sum, item) => sum + (item.salesPrices || item.price) * item.quantity,
     0
   );
-
   const shipping = 0;
   const tax = 0;
   const total = subtotal + shipping + tax;
 
-  // HANDLE INPUT
   const handleChange = (e) => {
-    const value =
-      e.target.type === "checkbox" ? e.target.checked : e.target.value;
-    setForm({ ...form, [e.target.name]: value });
+    setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  // ⭐ PAY NOW HANDLER
+  // ✅ MAIN FLOW
   const handlePayNow = async (e) => {
     e.preventDefault();
-    console.log("Razorpay Key:", import.meta.env.VITE_RAZORPAY_KEY_ID);
-
     if (!validateForm()) return;
 
-    // ⭐ 1. Format Cart Items
-    const formattedItems = cart.map((item) => ({
-      productName: item.title,
-      productImage: item.image,
-      sku: item.sku || "N/A",
-      quantity: item.quantity,
-      price: item.price,
-    }));
-
-    // ⭐ 2. Order Payload
-
-    const userId = localStorage.getItem("userId") || "000000000000000000000000";
-
-    const orderPayload = {
-      userId,
-
-      items: formattedItems,
-
-      subtotal: subtotal, // number
-      shipping: shipping, // number
-      tax: tax, // number
-      totalAmount: total, // number
-
-      paymentMethod: form.paymentMethod === "razorpay" ? "Credit Card" : "COD",
-
-      shippingAddress: {
-        street: form.address,
-        city: form.city,
-        state: form.state,
-        zipCode: form.pin,
-        country: form.country,
-      },
-
-      userLongitude: "0",
-      userLatitude: "0",
-    };
+    setLoading(true);
 
     try {
-      // ⭐ 3. Create Order API
-      const res = await fetch(`${BASE.PRODUCT_BASE}/orders`, {
+      
+
+      // 🔹 1. FORMAT ITEMS (FIXED)
+      const formattedItems = cart.map((item) => ({
+        productId: item._id || item.id,
+        productName: item.title,
+        productImage: item.image,
+        sku: item.sku || "N/A",
+        quantity: item.quantity,
+        price: item.price,
+      }));
+
+      // 🔹 2. CREATE ORDER PAYLOAD
+      const orderPayload = {
+        userId:user.id,
+        items: formattedItems,
+        subtotal,
+        shipping,
+        tax,
+        totalAmount: total,
+        paymentMethod:
+          form.paymentMethod === "razorpay" ? "RAZORPAY" : "COD",
+        shippingAddress: {
+          street: form.address,
+          apartment: form.apartment,
+          city: form.city,
+          state: form.state,
+          zipCode: form.pin,
+          country: form.country,
+        },
+        phone:form.phone,
+        email:form.email,
+        userLongitude: "0",
+        userLatitude: "0",
+      };
+
+      // 🔹 3. CREATE ORDER
+      const orderRes = await fetch(`${BASE.PRODUCT_BASE}/orders`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(orderPayload),
       });
-      console.log("STATUS............:", res.status);
-      // If backend responded with no JSON (OPTIONS case)
-      let data = {};
-      try {
-        data = await res.json();
-      } catch (e) {
-        console.warn("No JSON returned from server", e);
-      }
 
-      console.log("RAW RESPONSE:", data);
-      console.log("Backend error message:", data.message);
+      const orderData = await orderRes.json();
+      if (!orderRes.ok) throw new Error("Order creation failed");
 
-      // Check actual success response
-      if (!res.ok || !data.result) {
-        throw new Error("Order creation failed");
-      }
+      const order = orderData.result;
 
-      const backendOrder = data.result;
-
-      // ⭐ 4. Prepare Order Success Data to Send to Success Page
-      const orderData = {
-        orderId: backendOrder._id,
-        orderNumber: backendOrder.orderNumber,
-        subtotal: backendOrder.subtotal,
-        total: backendOrder.totalAmount,
-        paymentMethod: backendOrder.paymentMethod,
-        shippingMethod: "Free Shipping",
-        items: backendOrder.items, // ⭐ Backend से सही items आ रहे हैं
-        name: form.firstName + " " + form.lastName,
-        email: form.email,
-        phone: form.phone,
-        address: form.address,
-        city: form.city,
-        state: form.state,
-        pincode: form.pin,
-      };
-
-      // ⭐ 5. COD FLOW
+      // 🟢 COD FLOW
       if (form.paymentMethod === "cod") {
-        await fetch(`${BASE.PRODUCT_BASE}/orders/confirm-payment`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            orderId: backendOrder.orderId,
-            paymentId: "COD_PAYMENT",
-            signature: "COD_SIGNATURE",
-          }),
-        });
-
-        // ⭐ Redirect with order data
+        clearCart()
         navigate("/order-success", {
-          state: { orderData },
+          state: { orderData: order },
         });
-
         return;
       }
 
-      // ⭐ 6. Razorpay Payment Flow
+      // 🔹 4. CREATE PAYMENT
+      const paymentResponse = await api.post("/transaction/create-payment",{
+        userId:user.id,
+            orderId: order._id,
+            paymentMethod: "RAZORPAY",
+      })
+      // const paymentRes = await fetch(
+      //   `${BASE.PRODUCT_BASE}/transaction/create-payment`,
+      //   {
+      //     method: "POST",
+      //     headers: { "Content-Type": "application/json" },
+      //     body: JSON.stringify({
+      //       userId:user.id,
+      //       orderId: order._id,
+      //       paymentMethod: "RAZORPAY",
+      //     }),
+      //   }
+      // );
+
+      // const paymentData = await paymentRes.json();
+      // if (!paymentRes.ok) throw new Error("Payment init failed");
+
+      const { razorpayOrder } = paymentResponse.data.result;
+
+      const loadRazorpay = () => {
+  return new Promise((resolve) => {
+    const script = document.createElement("script");
+    script.src = "https://checkout.razorpay.com/v1/checkout.js";
+    script.onload = () => resolve(true);
+    script.onerror = () => resolve(false);
+    document.body.appendChild(script);
+  });
+};
+
+      // 🔹 5. OPEN RAZORPAY
       const options = {
         key: import.meta.env.VITE_RAZORPAY_KEY_ID,
-        amount: backendOrder.totalAmount * 100,
+        amount: razorpayOrder.amount,
         currency: "INR",
+        order_id: razorpayOrder.id,
         name: "My Store",
-        description: "Payment",
 
         prefill: {
           name: `${form.firstName} ${form.lastName}`,
@@ -187,276 +175,168 @@ export default function Checkout() {
         },
 
         handler: async function (response) {
-          await fetch(`${BASE.PRODUCT_BASE}/orders/confirm-payment`, {
+          // 🔹 6. VERIFY PAYMENT
+          await fetch(`${BASE.PRODUCT_BASE}/transaction/verify-payment`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-              orderId: backendOrder.orderId,
-              paymentId: response.razorpay_payment_id,
-              signature: response.razorpay_signature,
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_signature: response.razorpay_signature,
             }),
           });
-
-          // ⭐ Redirect to Success Page with details
+          clearCart()
           navigate("/order-success", {
-            state: { orderData },
+            state: { orderData: order },
           });
         },
       };
 
-      if (!window.Razorpay) {
-        alert("Razorpay SDK failed to load.");
-        return;
-      }
+      const isLoaded = await loadRazorpay();
 
-      const razorpay = new window.Razorpay(options);
-      razorpay.open();
+if (!isLoaded) {
+  alert("Razorpay SDK failed to load");
+  return;
+}
+
+
+      const rzp = new window.Razorpay(options);
+      rzp.open();
     } catch (err) {
-      alert("Payment Error: " + err.message);
+      console.error(err);
+      alert("Checkout failed");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-white">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2">
-        {/* LEFT FORM SECTION */}
-        <div className="px-6 py-8 lg:px-16 lg:py-12 border-r">
-          <div className="mb-8">
-            <div className="flex justify-between mb-3">
-              <h2 className="text-lg font-semibold">Contact</h2>
-              {/* <Link to="/signup" className="text-sm text-blue-600">
-                Sign in
-              </Link> */}
-            </div>
+    <div className="min-h-screen grid lg:grid-cols-2">
+      {/* LEFT */}
+      <div className="p-6 border-r">
+        <h2 className="text-xl font-semibold mb-4">Checkout</h2>
 
-            <input
-              type="text"
-              name="email"
-              placeholder="Email or mobile number"
-              value={form.email}
-              onChange={handleChange}
-              className={`w-full border rounded px-3 py-2.5 ${
-                errors.email ? "border-red-500" : "border-gray-300"
-              }`}
-            />
-            {errors.email && (
-              <p className="text-red-500 text-xs">{errors.email}</p>
-            )}
-          </div>
+        <input
+          name="email"
+          placeholder="Email"
+          value={form.email}
+          onChange={handleChange}
+          className="border p-2 w-full mb-2 rounded-lg"
+        />
+        {errors.email && <p className="text-red-500 text-xs">{errors.email}</p>}
 
-          {/* FORM FIELDS */}
-          <div className="mb-8">
-            <div className="grid grid-cols-2 gap-4 mb-4">
-              <div>
-                <input
-                  type="text"
-                  name="firstName"
-                  placeholder="First name"
-                  value={form.firstName}
-                  onChange={handleChange}
-                  className={`border px-3 py-2.5 rounded w-full ${
-                    errors.firstName ? "border-red-500" : "border-gray-300"
-                  }`}
-                />
-                {errors.firstName && (
-                  <p className="text-red-500 text-xs">{errors.firstName}</p>
-                )}
-              </div>
-
-              <div>
-                <input
-                  type="text"
-                  name="lastName"
-                  placeholder="Last name"
-                  value={form.lastName}
-                  onChange={handleChange}
-                  className={`border px-3 py-2.5 rounded w-full ${
-                    errors.lastName ? "border-red-500" : "border-gray-300"
-                  }`}
-                />
-                {errors.lastName && (
-                  <p className="text-red-500 text-xs">{errors.lastName}</p>
-                )}
-              </div>
-            </div>
-
-            {/* ADDRESS */}
-            <div className="mb-4">
-              <input
-                type="text"
-                name="address"
-                placeholder="Address"
-                value={form.address}
-                onChange={handleChange}
-                className={`w-full border rounded px-3 py-2.5 ${
-                  errors.address ? "border-red-500" : "border-gray-300"
-                }`}
-              />
-              {errors.address && (
-                <p className="text-red-500 text-xs">{errors.address}</p>
-              )}
-            </div>
-
-            {/* OPTIONAL */}
-            <input
-              type="text"
-              name="apartment"
-              placeholder="Apartment (optional)"
-              value={form.apartment}
-              onChange={handleChange}
-              className="w-full border rounded px-3 py-2.5 mb-4"
-            />
-
-            {/* CITY - STATE - PIN */}
-            <div className="grid grid-cols-3 gap-4 mb-4">
-              <input
-                type="text"
-                name="city"
-                placeholder="City"
-                value={form.city}
-                onChange={handleChange}
-                className={`border px-3 py-2.5 rounded ${
-                  errors.city ? "border-red-500" : "border-gray-300"
-                }`}
-              />
-
-              <select
-                name="state"
-                value={form.state}
-                onChange={handleChange}
-                className="border px-3 py-2.5 rounded"
-              >
-                <option>Delhi</option>
-                <option>Mumbai</option>
-                <option>UP</option>
-                <option>Bihar</option>
-                <option>Goa</option>
-              </select>
-
-              <div>
-                <input
-                  type="text"
-                  name="pin"
-                  maxLength={6}
-                  placeholder="PIN"
-                  value={form.pin}
-                  onChange={(e) =>
-                    setForm({ ...form, pin: e.target.value.replace(/\D/g, "") })
-                  }
-                  className={`border px-3 py-2.5 rounded w-full ${
-                    errors.pin ? "border-red-500" : "border-gray-300"
-                  }`}
-                />
-                {errors.pin && (
-                  <p className="text-red-500 text-xs">{errors.pin}</p>
-                )}
-              </div>
-            </div>
-
-            {/* PHONE */}
-            <input
-              type="text"
-              name="phone"
-              placeholder="Phone"
-              value={form.phone}
-              onChange={handleChange}
-              className={`w-full border rounded px-3 py-2.5 ${
-                errors.phone ? "border-red-500" : "border-gray-300"
-              }`}
-            />
-            {errors.phone && (
-              <p className="text-red-500 text-xs">{errors.phone}</p>
-            )}
-          </div>
-
-          {/* PAYMENT METHOD */}
-          <div className="mb-6">
-            <h2 className="text-lg font-semibold mb-2">Payment</h2>
-
-            <label className="flex items-center gap-2 p-3 border rounded bg-blue-50">
-              <input
-                type="radio"
-                name="paymentMethod"
-                value="razorpay"
-                checked={form.paymentMethod === "razorpay"}
-                onChange={handleChange}
-              />
-              Online Payment
-            </label>
-
-            <label className="flex items-center gap-2 p-3 border rounded mt-2">
-              <input
-                type="radio"
-                name="paymentMethod"
-                value="cod"
-                checked={form.paymentMethod === "cod"}
-                onChange={handleChange}
-              />
-              Cash on Delivery
-            </label>
-          </div>
-
-          {/* PAY NOW BUTTON */}
-          <button
-            onClick={handlePayNow}
-            className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700"
-          >
-            Pay now
-          </button>
+        <div className="grid grid-cols-2 gap-2">
+          <input
+            name="firstName"
+            placeholder="First Name"
+            value={form.firstName}
+            onChange={handleChange}
+            className="border p-2 rounded-lg"
+          />
+          <input
+            name="lastName"
+            placeholder="Last Name"
+            value={form.lastName}
+            onChange={handleChange}
+            className="border p-2 rounded-lg "
+          />
         </div>
 
-        {/* RIGHT SIDE CART SUMMARY */}
-        <div className="px-4 py-6 bg-gray-50 lg:px-12">
-          {cart.map((item) => (
-            <div key={item.id} className="flex gap-4 mb-6">
-              <div className="relative">
-                <img
-                  src={
-                    item.image && item.image.trim() !== ""
-                      ? item.image
-                      : fallbackImage
-                  }
-                  onError={(e) => (e.target.src = fallbackImage)}
-                  className="w-16 h-16 rounded border"
-                />
+        <input
+          name="address"
+          placeholder="Address"
+          value={form.address}
+          onChange={handleChange}
+          className="border p-2 w-full mt-2 rounded-lg"
+        />
 
-                <span className="absolute -top-2 -right-2 bg-red-600 text-white w-5 h-5 text-xs flex items-center justify-center rounded-full">
-                  {item.quantity}
-                </span>
-              </div>
+        <input
+          name="city"
+          placeholder="City"
+          value={form.city}
+          onChange={handleChange}
+          className="border p-2 w-full mt-2 rounded-lg"
+        />
 
-              <div className="flex-1">
-                <h3 className="text-sm font-medium">{item.title}</h3>
-              </div>
+        <input
+          name="pin"
+          placeholder="PIN"
+          value={form.pin}
+          onChange={handleChange}
+          className="border p-2 w-full mt-2 rounded-lg"
+        />
 
-              <div className="text-sm font-medium">
-                ₹{item.price * item.quantity}
-              </div>
+        <input
+          name="phone"
+          placeholder="Phone"
+          value={form.phone}
+          onChange={handleChange}
+          className="border p-2 w-full mt-2 rounded-lg"
+        />
+        {/* <input
+          name="email"
+          placeholder="Email"
+          value={form.email}
+          onChange={handleChange}
+          className="border p-2 w-full mt-2"
+        /> */}
+
+        {/* PAYMENT */}
+        <div className="mt-4">
+          <label>
+            <input
+              type="radio"
+              name="paymentMethod"
+              value="razorpay"
+              checked={form.paymentMethod === "razorpay"}
+              onChange={handleChange}
+            />
+            Online Payment
+          </label>
+
+          <label className="ml-4">
+            <input
+              type="radio"
+              name="paymentMethod"
+              value="cod"
+              checked={form.paymentMethod === "cod"}
+              onChange={handleChange}
+            />
+            COD
+          </label>
+        </div>
+
+        <button
+          onClick={handlePayNow}
+          disabled={loading}
+          className="bg-blue-600 text-white w-full py-3 mt-6 rounded"
+        >
+          {loading ? "Processing..." : "Pay Now"}
+        </button>
+      </div>
+
+      {/* RIGHT */}
+      <div className="p-6 bg-gray-50">
+        {cart.map((item) => (
+          <div key={item._id} className="flex gap-3 mb-4">
+            <img
+              src={item.image || fallbackImage}
+              onError={(e) => (e.target.src = fallbackImage)}
+              className="w-16 h-16"
+            />
+            <div className="flex-1">
+              <p>{item.title}</p>
+              <p>₹{item.price} x {item.quantity}</p>
             </div>
-          ))}
-
-          {/* PRICE SUMMARY */}
-          <div className="space-y-2 text-sm">
-            <div className="flex justify-between">
-              <span>Subtotal</span>
-              <span>₹{subtotal}</span>
-            </div>
-
-            <div className="flex justify-between">
-              <span>Shipping</span>
-              <span>₹{shipping}</span>
-            </div>
-
-            <div className="flex justify-between">
-              <span>Tax</span>
-              <span>₹{tax}</span>
-            </div>
+            <p>₹{item.price * item.quantity}</p>
           </div>
+        ))}
 
-          <div className="mt-4 border-t pt-4 flex justify-between text-lg font-bold">
-            <span>Total</span>
-            <span>₹{total}</span>
-          </div>
+        <div className="border-t pt-4 mt-4 flex justify-between">
+          {/* <p>Subtotal: ₹{subtotal}</p>
+          <p>Total: ₹{total}</p> */}
+          <span className="font-semibold text-xl ">SubTotal</span>
+          <span className="font-semibold text-xl">₹{subtotal}</span>
         </div>
       </div>
     </div>

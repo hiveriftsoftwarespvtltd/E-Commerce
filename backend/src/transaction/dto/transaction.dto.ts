@@ -15,8 +15,8 @@ export class CreateTransactionDto {
   @IsNotEmpty()
   orderId!: string;
 
-  @IsNumber()
-  amount!: number;
+  // @IsNumber()
+  // amount!: number;
 
   @IsString()
   @IsIn(['COD', 'RAZORPAY', 'STRIPE', 'UPI'])

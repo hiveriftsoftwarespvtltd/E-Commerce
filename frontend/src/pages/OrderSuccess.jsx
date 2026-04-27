@@ -6,6 +6,7 @@ import fallbackImage from "../assets/accessories.png";
 export default function OrderSuccess() {
   const location = useLocation();
   const order = location.state?.orderData || {}; // full backend order data
+  console.log("Order",order)
 
   return (
     <div className="min-h-screen bg-gray-100 p-4 md:p-10">
@@ -40,8 +41,8 @@ export default function OrderSuccess() {
                 <h4 className="font-semibold mb-2 text-gray-700">
                   Contact information
                 </h4>
-                <p className="text-gray-600 text-sm">{order.email}</p>
-                <p className="text-gray-600 text-sm">{order.phone}</p>
+                <p className="text-gray-600 text-sm">{order.contact.email}</p>
+                <p className="text-gray-600 text-sm">{order.contact.phone}</p>
               </div>
 
               {/* Payment Method */}
@@ -60,10 +61,12 @@ export default function OrderSuccess() {
                   Shipping address
                 </h4>
                 <p className="text-gray-600 text-sm">
-                  {order.name} <br />
-                  {order.address} <br />
-                  {order.city}, {order.state} {order.pincode} <br />
-                  {order.phone}
+                  {order.shippingAddress.apartment}
+                  {order.shippingAddress.street} <br />
+                  {/* {order.order.shippingAddress.zipCode} <br /> */}
+                  {order.shippingAddress.city}, {order.shippingAddress.state} {order.shippingAddress.zipCode} <br />
+                  {order.shippingAddress?.phone} <br />
+                  {order.shippingAddress?.email}
                 </p>
               </div>
 
@@ -73,10 +76,12 @@ export default function OrderSuccess() {
                   Billing address
                 </h4>
                 <p className="text-gray-600 text-sm">
-                  {order.name} <br />
-                  {order.address} <br />
-                  {order.city}, {order.state} {order.pincode} <br />
-                  {order.phone}
+                  {order.shippingAddress.apartment}
+                  {order.shippingAddress.street} <br />
+                  {/* {order.order.shippingAddress.zipCode} <br /> */}
+                  {order.shippingAddress.city}, {order.shippingAddress.state} {order.shippingAddress.zipCode} <br />
+                  {order.shippingAddress?.phone} <br />
+                  {order.shippingAddress?.email}
                 </p>
               </div>
 
@@ -142,7 +147,7 @@ export default function OrderSuccess() {
 
             <div className="flex justify-between text-xl font-bold mt-4">
               <p>Total</p>
-              <p>₹{order.total}</p>
+              <p>₹{order.totalAmount}</p>
             </div>
           </div>
         </div>

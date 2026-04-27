@@ -12,49 +12,49 @@ import {
 export class CreateUserDto {
   @IsString()
   @IsNotEmpty()
-  userName: string;
+  userName!: string;
 
   @IsString()
   @IsNotEmpty()
-  userType: string;
+  userType!: string;
 
   @IsString()
   @IsNotEmpty()
-  alternatePhone: string;
+  alternatePhone!: string;
 
   @IsEmail()
   @IsNotEmpty()
-  userEmail: string;
+  userEmail!: string;
 
   @IsString()
   @IsNotEmpty()
-  address: string;
+  address!: string;
 
   @IsString()
   @IsNotEmpty()
-  userPhone: string;
+  userPhone!: string;
 
   @IsNumber()
   @Min(1)
   @Max(120)
   @IsNotEmpty()
-  userAge: number;
+  userAge!: number;
 
   @IsString()
   @IsNotEmpty()
-  loginType: string;
+  loginType!: string;
 
   @IsString()
   @IsNotEmpty()
-  otp: string;
+  otp!: string;
 
   @IsString()
   @IsNotEmpty()
-  userPassword: string;
+  userPassword!: string;
 
   @IsEnum(['user', 'admin'])
   @IsNotEmpty()
-  role: 'user' | 'admin';
+  role!: 'user' | 'admin';
 
   @IsOptional()
   otpExpiration?: Date;

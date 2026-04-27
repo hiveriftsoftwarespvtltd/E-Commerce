@@ -31,6 +31,7 @@ import { ProfileModule } from './profile/profile.module';
 import { ProductDetailModule } from './product-detail/product-detail.module';
 import { CartModule } from './cart/cart.module';
 import { WishlistModule } from './wishlist/wishlist.module';
+import { AddressModule } from './address/address.module';
 import * as dotenv from 'dotenv';
 dotenv.config({ path: './.env' });
 
@@ -70,6 +71,7 @@ dotenv.config({ path: './.env' });
     ProductDetailModule,
     CartModule,
     WishlistModule,
+    AddressModule,
   ],
   controllers: [AppController, StoreController],
   providers: [AppService, RazorpayService, RiderTransactionService],

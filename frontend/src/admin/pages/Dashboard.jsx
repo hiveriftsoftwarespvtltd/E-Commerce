@@ -143,7 +143,7 @@ export default function Dashboard() {
               <div>
                 <p className="text-sm text-gray-600">Today's Sales</p>
                 <p className="mt-2 text-3xl font-bold">
-                  ${todaysSales.toLocaleString()}
+                  ₹{todaysSales.toLocaleString()}
                 </p>
               </div>
               <div className="bg-purple-500 p-3 rounded-full">

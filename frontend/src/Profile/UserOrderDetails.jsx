@@ -1,147 +1,104 @@
-import React from "react";
-import { Truck, CheckCircle, Package, MapPin, Phone, CreditCard } from "lucide-react";
+import { api } from "@/utils/axios-interceptor";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
-export default function UserOrderDetails() {
-  const order = {
-    id: "OD20250123356789",
-    status: "Delivered",
-    orderedDate: "13 Nov, 2025",
-    deliveredDate: "17 Nov, 2025",
-    payment: "UPI / Razorpay",
-    total: 899,
-    address: {
-      name: "Shahbaz",
-      phone: "+91 7860999955",
-      full: "B-24, Main Market Street, Delhi, India - 110006",
-    },
-    product: {
-      title: "Gold Harvester Farmer Statue 3",
-      price: 649,
-      qty: 1,
-      image:
-        "https://cdn.shopify.com/s/files/1/0260/5937/4685/files/Gold_Harvester_Farmer_3_-_The_Earth_Store_-_-_-2300465_64x64.jpg?v=1724153805",
-    },
-  };
+const UserOrderDetails = ({ orders }) => {
+  const { orderId } = useParams();
+  const [orderDetails,setOrderDetails] = useState(null)
+
+  const fetchOrderDetails = async()=>{
+    try {
+      const response = await api.get(`/orders/${orderId}`)
+      if(response.data.success){
+        setOrderDetails(response.data.result)
+      }
+    } catch (error) {
+      console.error("Fetch Order Details Error",error)
+    }
+  }
+
+  useEffect(()=>{
+    if(orderId){
+      fetchOrderDetails()
+    }
+    
+  },[orderId])
+
+
+  const order = orders.find((o) => o._id === orderId);
+
+  if (!order) return <p>Order not found</p>;
 
   return (
-    <div className="max-w-5xl mx-auto p-4 md:p-8">
+    <div className="p-6">
+      {/* Header */}
+      <div className="mb-6 border-b pb-4">
+        <h2 className="text-xl font-semibold">
+          {order.orderNumber}
+        </h2>
+        <p className="text-gray-500 text-sm">
+          {new Date(order.createdAt).toLocaleString()}
+        </p>
 
-      {/* Order Heading */}
-      <div className="bg-white shadow p-4 rounded-lg border mb-4">
-        <h2 className="text-xl font-semibold text-gray-900">Order Details</h2>
-        <p className="text-sm text-gray-600 mt-1">
-          Order ID: <span className="font-medium">{order.id}</span>
+        <div className="mt-2 flex gap-4 text-sm">
+          <span>Status: {order.status}</span>
+          <span>Payment: {order.paymentMethod}</span>
+        </div>
+      </div>
+
+      {/* Items */}
+      <div className="space-y-4">
+        {order.items.map((item) => (
+          <div
+            key={item._id}
+            className="flex gap-4 border rounded-lg p-3"
+          >
+            <img
+              src={item.productImage}
+              alt={item.productName}
+              className="w-24 h-24 object-cover rounded-md"
+            />
+
+            <div className="flex-1">
+              <p className="font-medium">
+                {item.productName}
+              </p>
+
+              <p className="text-sm text-gray-500">
+                SKU: {item.sku}
+              </p>
+
+              <p className="text-sm">
+                Quantity: {item.quantity}
+              </p>
+
+              <p className="font-semibold">
+                ₹{item.price}
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Summary */}
+      <div className="mt-6 border-t pt-4 text-sm">
+        <p>Subtotal: ₹{order.subtotal}</p>
+        <p>Shipping: ₹{order.shipping}</p>
+        <p>Tax: ₹{order.tax}</p>
+        <p className="font-semibold text-lg">
+          Total: ₹{order.totalAmount}
         </p>
       </div>
 
-      {/* Order Timeline */}
-      <div className="bg-white shadow p-4 rounded-lg border mb-6">
-        <h3 className="text-lg font-semibold mb-4">Order Status</h3>
-
-        <div className="flex items-center justify-between">
-          <div className="flex flex-col items-center">
-            <CheckCircle className="text-green-600 w-6 h-6" />
-            <span className="text-xs mt-1 text-green-600 font-medium">Ordered</span>
-            <span className="text-[10px] text-gray-500">{order.orderedDate}</span>
-          </div>
-
-          <div className="flex-1 border-t border-dashed mx-1"></div>
-
-          <div className="flex flex-col items-center">
-            <Package className="text-green-600 w-6 h-6" />
-            <span className="text-xs mt-1 text-green-600 font-medium">Shipped</span>
-          </div>
-
-          <div className="flex-1 border-t border-dashed mx-1"></div>
-
-          <div className="flex flex-col items-center">
-            <Truck className="text-green-600 w-6 h-6" />
-            <span className="text-xs mt-1 text-green-600 font-medium">Delivered</span>
-            <span className="text-[10px] text-gray-500">{order.deliveredDate}</span>
-          </div>
-        </div>
-      </div>
-
-      {/* Product Details */}
-      <div className="bg-white shadow p-4 rounded-lg border mb-6">
-        <h3 className="text-lg font-semibold mb-4">Product Details</h3>
-
-        <div className="flex items-center gap-4">
-          <img
-            src={order.product.image}
-            alt={order.product.title}
-            className="w-20 h-20 rounded-lg border"
-          />
-          <div>
-            <h4 className="font-medium">{order.product.title}</h4>
-            <p className="text-sm text-gray-600">
-              Qty: <strong>{order.product.qty}</strong>
-            </p>
-            <p className="text-lg font-semibold text-gray-900 mt-1">₹{order.product.price}</p>
-          </div>
-        </div>
-      </div>
-
-      {/* Address & Payment */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-
-        {/* Delivery Address */}
-        <div className="bg-white shadow p-4 rounded-lg border">
-          <h3 className="text-lg font-semibold mb-3">Delivery Address</h3>
-
-          <div className="flex items-start gap-2">
-            <MapPin className="text-gray-700 mt-1" />
-            <div>
-              <p className="font-medium">{order.address.name}</p>
-              <p className="text-sm text-gray-600">{order.address.full}</p>
-              <div className="flex items-center gap-2 text-sm mt-1">
-                <Phone className="w-4 h-4" />
-                {order.address.phone}
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Payment */}
-        <div className="bg-white shadow p-4 rounded-lg border">
-          <h3 className="text-lg font-semibold mb-3">Payment Info</h3>
-
-          <div className="flex items-center gap-2">
-            <CreditCard className="text-gray-700" />
-            <span className="text-sm font-medium">{order.payment}</span>
-          </div>
-        </div>
-      </div>
-
-      {/* Price Summary */}
-      <div className="bg-white shadow p-4 rounded-lg border mb-6">
-        <h3 className="text-lg font-semibold mb-4">Price Summary</h3>
-
-        <div className="flex justify-between text-sm mb-2">
-          <span>Item Total</span>
-          <span>₹{order.product.price}</span>
-        </div>
-
-        <div className="flex justify-between text-sm mb-2">
-          <span>Delivery Fee</span>
-          <span className="text-green-600 font-medium">Free</span>
-        </div>
-
-        <div className="flex justify-between font-semibold text-base border-t pt-2">
-          <span>Paid Amount</span>
-          <span>₹{order.total}</span>
-        </div>
-      </div>
-
-      {/* Footer Buttons */}
-      <div className="flex gap-3">
-        <button className="border border-gray-400 px-4 py-2 rounded-lg text-sm text-gray-700 hover:bg-gray-100">
-          Download Invoice
-        </button>
-        <button className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700">
-          Need Help?
-        </button>
+      {/* Address */}
+      <div className="mt-6 text-sm">
+        <h3 className="font-semibold mb-1">Shipping Address</h3>
+        <p>{order.shippingAddress.street}</p>
+        <p>{order.shippingAddress.city}</p>
+        <p>{order.shippingAddress.country}</p>
       </div>
     </div>
   );
-}
+};
+
+export default UserOrderDetails;

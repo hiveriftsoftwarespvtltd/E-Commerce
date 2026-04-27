@@ -32,39 +32,6 @@ import Banners from "./admin/pages/Banners";
 import WebsiteSettings from "./admin/pages/WebsiteSettings";
 import Profile from "./admin/pages/Profile";
 
-// Website Pages
-import TableDecor from "./Decors/TableDecor";
-import Aromadiffusers from "./Decors/Aromadiffusers";
-import Plantersvases from "./Decors/Plantersvases";
-import Glassware from "./Drinkware/Glassware";
-import CupSets from "./Drinkware/CupSets";
-import Mugs from "./Drinkware/Mugs";
-
-import Tray from "./Tableware/Tray";
-import Bowl from "./Tableware/Bowl";
-import Dinnerware from "./Tableware/Dinnerware";
-import MultipurposeJar from "./Tableware/MultipurposeJar";
-import DipsPlate from "./Tableware/DipsPlate";
-
-import KitchenEssentials from "./HomeEssentials/KitchenEssentials";
-import Organizer from "./HomeEssentials/Organizer";
-import Cookware from "./HomeEssentials/Cookware";
-
-import Sales from "./components/Sales";
-import MugSet from "./Combo/MugSet";
-import TravelMug from "./Combo/TravelMug";
-
-import Pendants from "./WomenAccessories/Pendants";
-import Earrings from "./WomenAccessories/Earrings";
-import Bracelet from "./WomenAccessories/Bracelet";
-
-import Tableware from "./HeroContentLInk/Tableware";
-import Drinkware from "./HeroContentLInk/Drinkware";
-import Womenaccessories from "./HeroContentLInk/Womenaccessories";
-import HomeDecore from "./HeroContentLInk/HomeDecore";
-import Combooffers from "./HeroContentLInk/Combooffers";
-import Homeessentials from "./HeroContentLInk/Homeessentials";
-import Jars from "./HeroContentLInk/Jars";
 
 import Signup from "./components/Signup";
 import Login from "./components/Login";
@@ -89,6 +56,7 @@ import UserProducts from "./pages/UserProducts";
 import Favourites from "./pages/Favourites";
 import MobileNavbar from "./components/MobileNavbar";
 import ScrollToTop from "./components/ScrollToTop";
+import AuthRoute from "./wrapper/AuthRoute";
 
 // Layout
 function MainLayout({ cartOpen, onCartOpen, onCartClose }) {
@@ -126,11 +94,14 @@ export default function App() {
             {/* PUBLIC ROUTES */}
             <Route
               element={
-                <MainLayout
+                <AuthRoute allowedRoles={["user","admin"]}>
+                  <MainLayout
                   cartOpen={cartOpen}
                   onCartOpen={() => setCartOpen(true)}
                   onCartClose={() => setCartOpen(false)}
                 />
+                </AuthRoute>
+                
               }
             >
               <Route path="/" element={<Home />} />
@@ -141,62 +112,21 @@ export default function App() {
               {/* ⭐ ADD THIS LINE HERE */}
               <Route path="/search" element={<SearchResults />} />
               <Route path="/favourites" element={<Favourites />} />
+              <Route path="/orders/:orderId" element={<UserOrderDetails />} />
 
               {/* Decor Pages */}
 
               {/* DYNAMIC SUBCATEGORY PAGE */}
               {/* <Route path="/subcategory/:id" element={<TableDecor />} /> */}
-              <Route
+              {/* <Route
                 path="/subcategory/:id"
                 element={<SubcategoryProductPage />}
-              />
+              /> */}
 
               {/* <Route path="/TableDecor" element={<TableDecor />} /> */}
-              <Route path="/Aromadiffusers" element={<Aromadiffusers />} />
-              <Route path="/Plantersvases" element={<Plantersvases />} />
-
-              {/* Drinkware */}
-              <Route path="/Glassware" element={<Glassware />} />
-              <Route path="/CupSets" element={<CupSets />} />
-              <Route path="/Mugs" element={<Mugs />} />
-
-              {/* Tableware */}
-              <Route path="/Tray" element={<Tray />} />
-              <Route path="/Bowl" element={<Bowl />} />
-              <Route path="/Dinnerware" element={<Dinnerware />} />
-              <Route path="/MultipurposeJar" element={<MultipurposeJar />} />
-              <Route path="/DipsPlate" element={<DipsPlate />} />
-
-              {/* Essentials */}
-              <Route
-                path="/KitchenEssentials"
-                element={<KitchenEssentials />}
-              />
-              <Route path="/Organizer" element={<Organizer />} />
-              <Route path="/Cookware" element={<Cookware />} />
-
-              {/* Combo & Sales */}
-              <Route path="/Sales" element={<Sales />} />
-              <Route path="/MugSet" element={<MugSet />} />
-              <Route path="/TravelMug" element={<TravelMug />} />
-
-              {/* Accessories */}
-              <Route path="/Pendants" element={<Pendants />} />
-              <Route path="/Earrings" element={<Earrings />} />
-              <Route path="/Bracelet" element={<Bracelet />} />
-
-              {/* Hero content */}
-              <Route path="/Tableware" element={<Tableware />} />
-              <Route path="/Drinkware" element={<Drinkware />} />
-              <Route path="/Womenaccessories" element={<Womenaccessories />} />
-              <Route path="/Combooffers" element={<Combooffers />} />
-              <Route path="/HomeDecore" element={<HomeDecore />} />
-              <Route path="/Homeessentials" element={<Homeessentials />} />
-              <Route path="/Jars" element={<Jars />} />
-
+             
               {/* Auth */}
-              <Route path="/signup" element={<Signup />} />
-              <Route path="/login" element={<Login />} />
+             
               <Route path="/MyOrder" element={<MyOrder />} />
               <Route path="/UserProfile" element={<UserProfile />} />
               <Route path="/ShippingPolicy" element={<ShippingPolicy />} />
@@ -213,6 +143,8 @@ export default function App() {
 
               <Route path="/ReturnReplace" element={<ReturnReplace />} />
             </Route>
+              <Route path="/signup" element={<Signup />} />
+              <Route path="/login" element={<Login />} />
 
             {/*      ADMIN AUTH ROUTES          */}
             {/* =============================== */}
@@ -221,12 +153,16 @@ export default function App() {
 
             {/* ADMIN ROUTES */}
             {/* <Route path="/admin" element={<AdminLayout />}> */}
+            
             <Route
               path="/admin"
               element={
-                <ProtectedAdminRoute>
+                // <ProtectedAdminRoute>
+                //   <AdminLayout />
+                // </ProtectedAdminRoute>
+                <AuthRoute allowedRoles={["admin"]}>
                   <AdminLayout />
-                </ProtectedAdminRoute>
+                </AuthRoute>
               }
             >
               <Route index element={<Dashboard />} />
@@ -248,6 +184,15 @@ export default function App() {
               element={
                 <div className="flex h-screen items-center justify-center text-2xl">
                   404 - Page Not Found
+                </div>
+              }
+            />
+
+            <Route
+              path="unAuthorized"
+              element={
+                <div className="flex h-screen items-center justify-center text-2xl">
+                  Your are not Authorized to get get this resource
                 </div>
               }
             />

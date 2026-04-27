@@ -8,6 +8,8 @@ export interface UserProfile extends Document {
   userAddress?: string;
   userPhone?: string;
   profilePicture?: string;
+  isActive?:string;
+  isBlocked?:string;
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -20,6 +22,8 @@ export const UserProfileSchema = new Schema<UserProfile>(
     userAddress: { type: String, trim: true },
     userPhone: { type: String, trim: true },
     profilePicture: { type: String },
+    isActive:{type:Boolean,default:true},
+    isBlocked:{type:Boolean,default:false}
   },
   { timestamps: true },
 );

@@ -7,6 +7,7 @@ export default function Signup() {
   const navigate = useNavigate();
 
   const [form, setForm] = useState({
+    name:"",
     email: "",
     password: "",
     confirm: "",
@@ -30,6 +31,7 @@ export default function Signup() {
   function validate(values) {
     const e = {};
 
+    if (!values.name.trim()) e.name = "Name is required";
     if (!values.email.trim()) e.email = "Email is required";
     else if (!emailRegex.test(values.email)) e.email = "Enter a valid email";
 
@@ -73,6 +75,7 @@ export default function Signup() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
+          userName:form.name,
           userEmail: form.email.trim().toLowerCase(),    // ← Lowercase bhej rahe hain (backend behavior)
           userPassword: form.password,                   // ← Plain password bhejo, backend hash karega
         }),
@@ -129,6 +132,19 @@ export default function Signup() {
 
         <form onSubmit={handleSubmit} noValidate className="space-y-5">
           {/* Email */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">User Name</label>
+            <input
+              type="text"
+              name="name"
+              value={form.name}
+              onChange={handleChange}
+              className={`w-full px-4 py-2.5 rounded-lg border  focus:outline-none focus:ring-2 transition`}
+              placeholder="User"
+              autoComplete="name"
+            />
+            {errors.name && <p className="mt-1 text-xs text-red-600">{errors.name}</p>}
+          </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
             <input

@@ -10,9 +10,9 @@ export default function CartDrawer({ isOpen, onClose }) {
   const [couponMsg, setCouponMsg] = useState("");
   const [checkoutWarning, setCheckoutWarning] = useState(false);
   const navigate = useNavigate()
+  
   // ----- price helpers -----
 
-  console.log("Cart at line 14",cart)
   // const totalMRP = cart.reduce(
   //   (s, i) => s + (i.salePrice || i.originalPrice) * i.quantity,
   //   0
@@ -212,7 +212,7 @@ const discountMRP = cart.reduce((sum, item) => {
       <button
         onClick={() => {
           onClose();
-          window.location.href = "/checkout";
+          navigate('/checkout');
         }}
         className="btn rounded-lg w-full"
       >

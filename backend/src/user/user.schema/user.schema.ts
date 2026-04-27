@@ -11,6 +11,7 @@ export const UserSchema = new Schema(
       trim: true,
       lowercase: true,
     },
+    userAvatarUrl:{type:String},
     userAddress: { type: String },
     userPhone: { type: String },
     alternatePhone: { type: String },
@@ -24,7 +25,8 @@ export const UserSchema = new Schema(
       type: { type: String, enum: ['Point'], default: 'Point' },
       coordinates: { type: [String], default: ['0', '0'] }, 
     },
-    profileImage:{type:String}
+    profileImage:{type:String},
+    isActive:{type:Boolean,default:true}
   },
   { timestamps: true },
 );

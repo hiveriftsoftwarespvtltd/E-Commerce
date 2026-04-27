@@ -38,8 +38,8 @@ import { ToastContainer } from "react-toastify";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
+    <BrowserRouter>
     <AuthProvider>
-      <BrowserRouter>
         <SearchProvider>
           <FilterProvider>
             <CartProvider>
@@ -48,9 +48,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
             </CartProvider>
           </FilterProvider>
         </SearchProvider>
-      </BrowserRouter>
     </AuthProvider>
-      
-    
+    </BrowserRouter> 
   </React.StrictMode>,
 );

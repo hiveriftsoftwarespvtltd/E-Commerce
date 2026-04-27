@@ -47,7 +47,8 @@ export class CreateOrderDto {
     zipCode: string;
     country?: string;
   };
-
+  @IsString() @IsNotEmpty() phone!:string;
+  @IsString() @IsNotEmpty() email!:string;
   @IsString() @IsNotEmpty() userLongitude!: string;
   @IsString() @IsNotEmpty() userLatitude!: string;
 }

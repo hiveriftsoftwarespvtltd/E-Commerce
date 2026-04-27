@@ -1,10 +1,12 @@
-import { Controller, Post, Get, Put, Delete, Param, Body } from '@nestjs/common';
+import { Controller, Post, Get, Put, Delete, Param, Body, UseGuards, Req } from '@nestjs/common';
 import { OrderService } from './order.service';
 import { CreateOrderDto } from './dto/create-order-dto';
 import { UpdateOrderStatusDto } from './dto/update-order-dto';
 import CustomError from 'src/common/providers/customer-error.service';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('orders')
+@UseGuards(AuthGuard('jwt'))
 export class OrderController {
   constructor(private orderService: OrderService) {}
 
@@ -16,6 +18,11 @@ export class OrderController {
   @Get()
   getAll() {
     return this.orderService.getAllOrders();
+  }
+
+    @Get('/user-orders')
+  getUserOrders(@Req() req) {
+    return this.orderService.getUserOrders(req.user.id);
   }
 
   @Get(':id')
@@ -42,11 +49,12 @@ export class OrderController {
     });
   }
 
-  @Get(':id/payment-status')
+
+
+  @Post(':id/payment-status')
   getPaymentStatus(@Param('id') id: string) {
     return this.orderService.getPaymentStatus(id);
   }
-
   @Delete(':id')
   delete(@Param('id') id: string) {
     return this.orderService.deleteOrder(id);
