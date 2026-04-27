@@ -47,7 +47,7 @@ dotenv.config({ path: './.env' });
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'public'),
     }),
-    MongooseModule.forRoot(process.env.LOCAL_MOBGO_URI as string, {}),
+    MongooseModule.forRoot(process.env.MONGO_URI as string, {}),
 
     AuthModule,
     UserModule,
