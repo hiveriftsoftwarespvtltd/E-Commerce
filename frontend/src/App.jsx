@@ -57,6 +57,7 @@ import Favourites from "./pages/Favourites";
 import MobileNavbar from "./components/MobileNavbar";
 import ScrollToTop from "./components/ScrollToTop";
 import AuthRoute from "./wrapper/AuthRoute";
+import GuestUsers from "./pages/GuestUsers";
 
 // Layout
 function MainLayout({ cartOpen, onCartOpen, onCartClose }) {
@@ -94,13 +95,13 @@ export default function App() {
             {/* PUBLIC ROUTES */}
             <Route
               element={
-                <AuthRoute allowedRoles={["user","admin"]}>
+                <AuthRoute allowedRoles={["user","admin"]} publicRoutes={["/","/products"]}>
                   <MainLayout
                   cartOpen={cartOpen}
                   onCartOpen={() => setCartOpen(true)}
                   onCartClose={() => setCartOpen(false)}
                 />
-                </AuthRoute>
+                 </AuthRoute>
                 
               }
             >
@@ -136,7 +137,7 @@ export default function App() {
               <Route path="/ContactPage" element={<ContactPage />} />
               <Route path="/FAQPage" element={<FAQPage />} />
               <Route path="/BlogCard" element={<BlogCard />} />
-              <Route path="/product/:id" element={<ProductDetails />} />
+              <Route path="/products/:id" element={<ProductDetails />} />
 
               <Route path="/UserOrderDetails" element={<UserOrderDetails />} />
               <Route path="/order/:id" element={<UserOrderDetails />} />
@@ -150,6 +151,8 @@ export default function App() {
             {/* =============================== */}
             <Route path="/admin/login" element={<AdminLogin />} />
             <Route path="/admin/signup" element={<AdminSignup />} />
+             {/* <Route path="/guest" element={<GuestUsers />} /> */}
+            
 
             {/* ADMIN ROUTES */}
             {/* <Route path="/admin" element={<AdminLayout />}> */}

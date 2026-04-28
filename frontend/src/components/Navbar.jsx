@@ -29,8 +29,11 @@ import {
 import { useSearch } from "../context/SearchContext";
 
 import BASE from "../config";
+import { useAuth } from "@/context/UserContext";
 
 const Navbar = ({ onCartOpen }) => {
+  const {user,token,isLoggedIn} = useAuth()
+  console.log("Navbar",isLoggedIn,token,user)
   const profileRef = useRef(null);
   const navigate = useNavigate();
   const params = useLocation();
@@ -56,7 +59,7 @@ const Navbar = ({ onCartOpen }) => {
   const [userName, setUserName] = useState("User");
   const [products, setProducts] = useState(productData?.products);
   const [filteredProducts, setFilteredProducts] = useState([]);
-  const isLoggedIn = true;
+  
 
   const options = [
     {
@@ -92,10 +95,18 @@ const Navbar = ({ onCartOpen }) => {
     },
   ];
   const guestUserOptions = [
-    { label: "Home", url: "/", icon: Home },
-    { label: "Shop", url: "/products", icon: ShoppingBag },
-    { label: "Categories", url: "/categories", icon: Grid },
-    { label: "Account", url: "/auth/login", icon: User },
+   {
+      label: "Home",
+      icon: Home,
+      url: "/",
+      onClick: () => navigate("/"),
+    },
+    {
+      label: "Login",
+      icon: User,
+      url: "/login",
+      onClick: () => navigate("/login"),
+    },
   ];
 
   const loggedInUserOptions = [
@@ -292,7 +303,7 @@ const Navbar = ({ onCartOpen }) => {
                     <div
                       key={item.id}
                       onClick={() => {
-                        navigate(`/product/${item.id}`);
+                        navigate(`/products/${item.id}`);
                         setSearchOpen(false);
                         setQuery("");
                       }}
@@ -341,7 +352,7 @@ const Navbar = ({ onCartOpen }) => {
           <div className="flex items-center gap-6">
             {/* Navigation */}
             <div className="hidden lg:flex items-center gap-6">
-              {options?.map((item, index) => (
+              { (token ? options : guestUserOptions)?.map((item, index) => (
                 <span
                   key={index}
                   onClick={item.onClick}
@@ -417,7 +428,7 @@ const Navbar = ({ onCartOpen }) => {
                     <div
                       key={item.id}
                       onClick={() => {
-                        navigate(`/product/${item.id}`);
+                        navigate(`/products/${item.id}`);
                         setSearchOpen(false);
                         setQuery("");
                       }}
@@ -511,7 +522,7 @@ const Navbar = ({ onCartOpen }) => {
                 <div
                   key={item.id}
                   onClick={() => {
-                    navigate(`/product/${item.id}`);
+                    navigate(`/products/${item.id}`);
                     setSearchOpen(false);
                   }}
                   className="flex items-center gap-4 p-3 border-b hover:bg-gray-100 cursor-pointer"

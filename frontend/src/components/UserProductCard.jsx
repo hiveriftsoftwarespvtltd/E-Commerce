@@ -4,6 +4,8 @@ import { useCart } from "../context/CartContext";
 import { useNavigate } from "react-router-dom";
 import { api } from "@/utils/axios-interceptor";
 import fallbackImage from "../assets/accessories.png";
+import { useAuth } from "@/context/UserContext";
+import AuthModal from "./AuthModal";
 
 const UserProductCard = ({ item, onWishlistChange }) => {
   if (!item) return null;
@@ -11,9 +13,11 @@ const UserProductCard = ({ item, onWishlistChange }) => {
   const [activeImg, setActiveImg] = useState(0);
   const [loading, setLoading] = useState(false);
   const [isFav, setIsFav] = useState(item?.isFavourite || false);
+  const {isLoggedIn} = useAuth()
 
   const navigate = useNavigate();
   const { addItem, decreaseItem, cartMap } = useCart();
+  const [authModal,setAuthModal] = useState(false)
 
   // ✅ keep local state in sync with parent
   useEffect(() => {
@@ -22,6 +26,18 @@ const UserProductCard = ({ item, onWishlistChange }) => {
 
   const cartItem = cartMap.get(item._id);
   const quantity = cartItem?.quantity || 0;
+
+  const handleAddToCart = (product)=>{
+    try {
+      if(isLoggedIn){
+        addItem(product)
+      }else{
+        setAuthModal(true)
+      }
+    } catch (error) {
+      console.log("Add to Cart Error",error)
+    }
+  }
 
   // ✅ Toggle wishlist
   const toggleFavourite = async () => {
@@ -54,7 +70,7 @@ const UserProductCard = ({ item, onWishlistChange }) => {
   return (
     <div
       className="group bg-white rounded-2xl border p-3 hover:shadow-xl transition-all duration-300 relative cursor-pointer"
-      onClick={() => navigate(`/product/${item._id}`)}
+      onClick={() => navigate(`/products/${item._id}`)}
     >
       {/* 🔄 Loading */}
       {loading && (
@@ -145,7 +161,7 @@ const UserProductCard = ({ item, onWishlistChange }) => {
           <button
             onClick={(e) => {
               e.stopPropagation();
-              addItem(item);
+              handleAddToCart(item)
             }}
             className="w-full bg-accent text-white py-2 rounded-lg flex items-center justify-center gap-2 hover:bg-accent/90 transition active:scale-95"
           >
@@ -178,6 +194,9 @@ const UserProductCard = ({ item, onWishlistChange }) => {
           </div>
         )}
       </div>
+      {authModal && (
+        <AuthModal onClose={()=>setAuthModal(false)}/>
+      )}
     </div>
   );
 };

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import productData from "../../products.json";
 
@@ -8,30 +8,48 @@ import ProductReviews from "../components/ProductReviews";
 import Suggestions from "./ProductSuggestions";
 import ProductDetailsSkeleton from "./ProductDetailsSkeleton";
 import { useSearch } from "@/context/SearchContext";
+import AuthModal from "./AuthModal";
+import { useAuth } from "@/context/UserContext";
 
 export default function ProductDetails() {
   const { id } = useParams();
-  const { addItem, decreaseItem, cart,cartMap } = useCart();
-  const {allWebsiteProducts} = useSearch()
+  const { isLoggedIn } = useAuth();
+  const { addItem, decreaseItem, cart, cartMap } = useCart();
+  const { allWebsiteProducts } = useSearch();
+  const [showAuthModal, setShowAuthModal] = useState(false);
+  const navigate = useNavigate();
 
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
 
   // ✅ Find product
-  console.log("All website products",allWebsiteProducts)
   useEffect(() => {
     if (!allWebsiteProducts?.length) return;
     setLoading(true);
     const found = allWebsiteProducts?.find(
-      (item) => String(item._id) === String(id));
+      (item) => String(item._id) === String(id),
+    );
     setProduct(found || null);
     setLoading(false);
-  }, [id,allWebsiteProducts]);
+  }, [id, allWebsiteProducts]);
 
   // ✅ Derive quantity safely
   const cartItem = cartMap.get(id);
   const quantity = cartItem?.quantity || 0;
 
+  const handleAddToCart = async (product) => {
+    try {
+      if (isLoggedIn) {
+        addItem(product);
+        return;
+      } else {
+        setShowAuthModal(true);
+        return;
+      }
+    } catch (error) {
+      console.log("Handle Add To Cart Error", error);
+    }
+  };
 
   if (loading) return <ProductDetailsSkeleton />;
   if (!product) return <div className="p-10">Product not found</div>;
@@ -39,7 +57,6 @@ export default function ProductDetails() {
   return (
     <div className="bg-gray-100 min-h-screen py-6 px-4">
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6">
-
         {/* LEFT */}
         <div className="lg:col-span-4">
           <ProductImages images={product.imageUrls} />
@@ -51,9 +68,7 @@ export default function ProductDetails() {
 
           <div className="flex items-center gap-3">
             <span className="text-2xl font-bold">₹{product.salesPrice}</span>
-            <span className="line-through text-gray-500">
-              ₹{product.price}
-            </span>
+            <span className="line-through text-gray-500">₹{product.price}</span>
             {/* <span className="text-green-600 font-semibold">
               {product.discount}
             </span> */}
@@ -82,38 +97,52 @@ export default function ProductDetails() {
         {/* RIGHT */}
         <div className="lg:col-span-3 bg-white p-6 shadow space-y-4 flex flex-col rounded-lg">
           <p className="text-2xl font-bold">₹{product.salesPrice}</p>
+         {isLoggedIn && quantity > 0 && (
+  <div className="flex items-center border rounded-lg overflow-hidden w-full max-w-[140px]">
+    <button
+      onClick={() => decreaseItem(product)}
+      className="w-10 h-10 flex items-center justify-center bg-gray-100 hover:bg-gray-200 text-lg font-bold cursor-pointer"
+    >
+      −
+    </button>
 
-          <div className="flex items-center border rounded-lg overflow-hidden w-full max-w-[140px]">
-            <button
-              onClick={() => decreaseItem(product)}
-              className="w-10 h-10 flex items-center justify-center bg-gray-100 hover:bg-gray-200 text-lg font-bold cursor-pointer"
-            >
-              −
-            </button>
+    <span className="flex-1 text-center font-semibold text-lg">
+      {quantity}
+    </span>
 
-            <span className="flex-1 text-center font-semibold text-lg">
-              {quantity}
-            </span>
-
-            <button
-              onClick={() => addItem(product)}
-              className="w-10 h-10 flex items-center justify-center bg-gray-100 hover:bg-gray-200 text-lg font-bold cursor-pointer"
-            >
-              +
-            </button>
-          </div>
+    <button
+      onClick={() => addItem(product)}
+      className="w-10 h-10 flex items-center justify-center bg-gray-100 hover:bg-gray-200 text-lg font-bold cursor-pointer"
+    >
+      +
+    </button>
+  </div>
+)}
+          
 
           <button
             disabled={quantity !== 0}
-            onClick={() => addItem(product)}
+            onClick={() => handleAddToCart(product)}
             className="w-full rounded-lg btn disabled:btn-disabled"
           >
             {quantity === 0 ? "Add to Cart" : "Added"}
           </button>
 
-          <Link to="/checkout">
-            <button className="w-full rounded-lg btn">Buy Now</button>
-          </Link>
+          {/* <Link to="/checkout"> */}
+          <button
+            onClick={() => {
+              if (isLoggedIn) {
+                addItem(product)
+                navigate("/checkout");
+              } else {
+                setShowAuthModal(true);
+              }
+            }}
+            className="w-full rounded-lg btn"
+          >
+            Buy Now
+          </button>
+          {/* </Link> */}
         </div>
       </div>
 
@@ -133,6 +162,7 @@ export default function ProductDetails() {
       <div className="max-w-7xl mx-auto mt-6 bg-white p-6 rounded-lg shadow">
         <Suggestions items={allWebsiteProducts} />
       </div>
+      {showAuthModal && <AuthModal onClose={() => setShowAuthModal(false)} />}
     </div>
   );
 }

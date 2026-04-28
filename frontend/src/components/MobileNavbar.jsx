@@ -2,11 +2,13 @@ import React from "react";
 import { Home, ShoppingBag, Heart, ShoppingCart, User } from "lucide-react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useCart } from "@/context/CartContext";
+import { useAuth } from "@/context/UserContext";
 
-const MobileNavbar = ({ onCartOpen, isLoggedIn = true }) => {
+const MobileNavbar = ({ onCartOpen }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const { totalQuantity } = useCart();
+  const {isLoggedIn} = useAuth()
 
   const options = [
     {
@@ -42,10 +44,25 @@ const MobileNavbar = ({ onCartOpen, isLoggedIn = true }) => {
     },
   ];
 
+  const guestUserOptions = [
+     {
+        label: "Home",
+        icon: Home,
+        url: "/",
+        onClick: () => navigate("/"),
+      },
+      {
+        label: "Login",
+        icon: User,
+        url: "/login",
+        onClick: () => navigate("/login"),
+      },
+    ];
+
   return (
     <div className="fixed bottom-0 left-0 w-full bg-white border-t shadow-md lg:hidden z-50 rounded-t-md overflow-auto">
       <div className="flex justify-around items-center h-[65px]">
-        {options.map((item, idx) => {
+        {(isLoggedIn ? options : guestUserOptions)?.map((item, idx) => {
           const Icon = item.icon;
           const isActive = location.pathname === item.url;
 

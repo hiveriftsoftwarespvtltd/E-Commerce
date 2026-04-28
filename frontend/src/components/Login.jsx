@@ -158,6 +158,7 @@ const handleSubmit = async (e) => {
             >
               {showPassword ? <EyeOff size={22} /> : <Eye size={22} />}
             </button>
+           
           </div>
 
           {/* Submit Button */}
@@ -180,7 +181,9 @@ const handleSubmit = async (e) => {
               "Log In"
             )}
           </button>
+           
         </form>
+       
 
         <div className="mt-8 text-center">
           <p className="text-sm text-gray-600">
@@ -190,6 +193,15 @@ const handleSubmit = async (e) => {
               className="font-bold text-accent hover:text-bold-accent-1 underline underline-offset-4"
             >
               Sign up here
+            </Link>
+          </p>
+           <p className="text-sm text-gray-600 mt-2">
+            
+            <Link
+              to="/"
+              className="font-bold text-accent hover:text-bold-accent-1 underline underline-offset-4"
+            >
+              Go Back Home
             </Link>
           </p>
         </div>

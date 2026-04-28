@@ -5,6 +5,7 @@ import BASE from "../../config";
 
 export default function AdminSignup() {
   const [form, setForm] = useState({
+    userName:"",
     email: "",
     password: "",
     confirm: "",
@@ -32,6 +33,7 @@ export default function AdminSignup() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          userName:form.userName,
           userEmail: form.email,
           userPassword: form.password
         
@@ -74,6 +76,17 @@ export default function AdminSignup() {
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
+           <div>
+            <label>Username</label>
+            <input
+              type="text"
+              name="userName"
+              value={form.userName}
+              onChange={handleChange}
+              className="w-full mt-1 px-4 py-2 border rounded-lg"
+              placeholder="Admin Name"
+            />
+          </div>
           <div>
             <label>Email</label>
             <input

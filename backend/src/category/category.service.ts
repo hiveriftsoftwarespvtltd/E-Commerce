@@ -22,6 +22,7 @@ export class CategoryService {
     @InjectModel('Category') private categoryModel: Model<Category>,
   ) {}
 
+  
    private baseUrl =
   process.env.NODE_ENV === 'production'
     ? process.env.SERVER_BASE_URL!

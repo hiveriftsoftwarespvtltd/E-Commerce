@@ -62,7 +62,7 @@ const Suggestions = ({ items = [] }) => {
         {items.map((item) => (
           <div
             key={item.id}
-            onClick={()=>navigate(`/product/${item._id}`)}
+            onClick={()=>navigate(`/products/${item._id}`)}
             className="min-w-[220px] max-w-[220px] bg-white border border-accent rounded-lg p-3 flex-shrink-0 transition duration-300 hover:shadow-lg  cursor-pointer"
           >
             

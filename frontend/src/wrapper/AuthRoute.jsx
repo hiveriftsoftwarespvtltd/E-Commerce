@@ -1,18 +1,27 @@
-import { useAuth } from '@/context/UserContext'
-import React from 'react'
-import { useNavigate } from 'react-router-dom'
-import { Navigate } from 'react-router-dom'
+import { useAuth } from "@/context/UserContext";
+import { Navigate, useLocation } from "react-router-dom";
 
-const AuthRoute = ({children,allowedRoles=[]}) => {
-    const {isLoggedIn,user,token}= useAuth()
-    const navigate = useNavigate()
-    if(!isLoggedIn){
-        return <Navigate to="/login" replace/>
-    } 
-    if(!allowedRoles.includes(user.role)){
-      return <Navigate to="/unAuthorized" replace/>
-    }
-  return children
-}
+const AuthRoute = ({ children, allowedRoles = [], publicRoutes = [] }) => {
+  const { isLoggedIn, user } = useAuth();
+  const location = useLocation();
 
-export default AuthRoute
+  const pathname = location.pathname;
+
+  const isPublic = publicRoutes.some(route =>
+    pathname.startsWith(route)
+  );
+
+  // If not logged in & route is not public
+  if (!isLoggedIn && !isPublic) {
+    return <Navigate to="/login" replace />;
+  }
+
+  // If logged in but role not allowed
+  if (allowedRoles.length && user && !allowedRoles.includes(user.role)) {
+    return <Navigate to="/unAuthorized" replace />;
+  }
+
+  return children;
+};
+
+export default AuthRoute;

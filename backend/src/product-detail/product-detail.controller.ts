@@ -18,9 +18,10 @@ import { UpdateProductDetailDto } from './dto/update-product-detail.dto';
 import { AnyFilesInterceptor } from '@nestjs/platform-express';
 import { QueryProductDto } from './dto/query-product.dto';
 import { diskStorage } from 'multer';
-import { extname } from 'path';
+import path, { extname } from 'path';
 import { AuthGuard } from '@nestjs/passport';
 import { OptionalAuthGuard } from 'src/auth/guards/optionalAuthGuard';
+import * as fs from 'fs';
 
 
 @Controller('product-detail')
@@ -119,12 +120,37 @@ export class ProductDetailController {
     }),
   }),
 )
-update(
+async update(
   @Param('id') id: string,
   @UploadedFiles() files: Array<Express.Multer.File>,
   @Body() dto: UpdateProductDetailDto,
 ) {
-  if (files?.length > 0) {
+  // 🔹 1. Get existing product
+  const existing = await this.productDetailService.findById(id); // create this method if not exists
+
+  if (!existing) {
+    throw new Error('Product not found');
+  }
+
+  // 🔹 2. If new images uploaded → delete old ones
+  if (files?.length > 0 && existing.imageUrls?.length) {
+    existing.imageUrls.forEach((url: string) => {
+      try {
+        // remove base URL
+        const relativePath = url.replace(this.baseUrl, '');
+
+        // create absolute path
+        const filePath = path.join(process.cwd(), relativePath);
+
+        if (fs.existsSync(filePath)) {
+          fs.unlinkSync(filePath);
+        }
+      } catch (err) {
+        console.log('Error deleting file:', err);
+      }
+    });
+
+    // 🔹 3. Add new images
     dto.imageUrls = files.map(
       (file) => `${this.baseUrl}uploads/products/${file.filename}`,
     );

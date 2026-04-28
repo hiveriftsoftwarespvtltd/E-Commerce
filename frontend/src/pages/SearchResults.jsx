@@ -53,7 +53,7 @@ export default function SearchResults() {
               className="bg-white rounded-xl shadow p-4"
             >
               {/* Product Link */}
-              <Link to={`/product/${product._id}`}>
+              <Link to={`/products/${product._id}`}>
                 <img
                   src={imageUrl}
                   onError={(e) => {

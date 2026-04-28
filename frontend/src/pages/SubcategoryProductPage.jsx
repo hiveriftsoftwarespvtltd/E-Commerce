@@ -151,7 +151,7 @@ export default function SubcategoryProductPage() {
 
             return (
               <div key={product._id} className="bg-white rounded-xl shadow p-4">
-                <Link to={`/product/${product._id}`}>
+                <Link to={`/products/${product._id}`}>
                   <img
                     src={imageUrl}
                     onError={(e) => {

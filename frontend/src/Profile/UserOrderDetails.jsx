@@ -2,7 +2,7 @@ import { api } from "@/utils/axios-interceptor";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-const UserOrderDetails = ({ orders }) => {
+const UserOrderDetails = () => {
   const { orderId } = useParams();
   const [orderDetails,setOrderDetails] = useState(null)
 
@@ -25,30 +25,30 @@ const UserOrderDetails = ({ orders }) => {
   },[orderId])
 
 
-  const order = orders.find((o) => o._id === orderId);
+  // const order = orders.find((o) => o._id === orderId);
 
-  if (!order) return <p>Order not found</p>;
+  if (!orderDetails) return <p>Order not found</p>;
 
   return (
     <div className="p-6">
       {/* Header */}
       <div className="mb-6 border-b pb-4">
         <h2 className="text-xl font-semibold">
-          {order.orderNumber}
+          {orderDetails.orderNumber}
         </h2>
         <p className="text-gray-500 text-sm">
-          {new Date(order.createdAt).toLocaleString()}
+          {new Date(orderDetails.createdAt).toLocaleString()}
         </p>
 
         <div className="mt-2 flex gap-4 text-sm">
-          <span>Status: {order.status}</span>
-          <span>Payment: {order.paymentMethod}</span>
+          <span>Status: {orderDetails.status}</span>
+          <span>Payment: {orderDetails.paymentMethod}</span>
         </div>
       </div>
 
       {/* Items */}
       <div className="space-y-4">
-        {order.items.map((item) => (
+        {orderDetails.items.map((item) => (
           <div
             key={item._id}
             className="flex gap-4 border rounded-lg p-3"
@@ -82,20 +82,20 @@ const UserOrderDetails = ({ orders }) => {
 
       {/* Summary */}
       <div className="mt-6 border-t pt-4 text-sm">
-        <p>Subtotal: ₹{order.subtotal}</p>
-        <p>Shipping: ₹{order.shipping}</p>
-        <p>Tax: ₹{order.tax}</p>
+        <p>Subtotal: ₹{orderDetails.subtotal}</p>
+        <p>Shipping: ₹{orderDetails.shipping}</p>
+        <p>Tax: ₹{orderDetails.tax}</p>
         <p className="font-semibold text-lg">
-          Total: ₹{order.totalAmount}
+          Total: ₹{orderDetails.totalAmount}
         </p>
       </div>
 
       {/* Address */}
       <div className="mt-6 text-sm">
         <h3 className="font-semibold mb-1">Shipping Address</h3>
-        <p>{order.shippingAddress.street}</p>
-        <p>{order.shippingAddress.city}</p>
-        <p>{order.shippingAddress.country}</p>
+        <p>{orderDetails.shippingAddress.street}</p>
+        <p>{orderDetails.shippingAddress.city}</p>
+        <p>{orderDetails.shippingAddress.country}</p>
       </div>
     </div>
   );

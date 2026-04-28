@@ -243,4 +243,8 @@ export class ProductDetailService {
       throw new CustomError(500, error.message);
     }
   }
+
+  async findById(id: string) {
+  return this.productModel.findById(id);
+}
 }
