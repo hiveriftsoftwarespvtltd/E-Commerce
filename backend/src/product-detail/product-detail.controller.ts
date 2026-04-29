@@ -31,9 +31,9 @@ export class ProductDetailController {
   constructor(private readonly productDetailService: ProductDetailService) { }
 
   // your LAN IP (change if needed)
-  private baseUrl =
+ baseUrl =
   process.env.NODE_ENV === 'production'
-    ? process.env.SERVER_BASE_URL!
+    ? `${process.env.SERVER_BASE_URL}/storeforexplore_api/`
     : 'http://localhost:8000/';
 
   // @Post('AddProduct')

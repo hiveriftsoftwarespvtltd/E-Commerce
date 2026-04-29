@@ -7,9 +7,11 @@ import { AuthModule } from 'src/auth/auth.module';
 import { Address, AddressSchema } from './user.schema/address.schema';
 import { OrderSchema } from 'src/order/order.schema/order.schema';
 import { WishListSchema } from 'src/wishlist/wishlist.schema/wishlist.schema';
+import { AddressModule } from 'src/address/address.module';
 
 @Module({
   imports: [
+    AddressModule,
     MongooseModule.forFeature([{ name: 'User', schema: UserSchema }]),
     MongooseModule.forFeature([{ name: 'Order', schema: OrderSchema }]),
     MongooseModule.forFeature([{ name: 'Wishlist', schema: WishListSchema }]),

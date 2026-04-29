@@ -14,10 +14,12 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { Order } from 'src/order/order.schema/order.schema';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { AddressService } from 'src/address/address.service';
 
 @Injectable()
 export class UserService {
   constructor(
+    private readonly addressService:AddressService,
     @InjectModel('User') private userModel: Model<User>,
     @InjectModel('Address') private addressModel: Model<Address>,
     @InjectModel("Order") private orderModel: Model<Order>,
@@ -183,10 +185,10 @@ export class UserService {
       throw new CustomError(404, 'User not found');
     }
 
-    const baseUrl =
-      process.env.NODE_ENV === 'production'
-        ? process.env.SERVER_BASE_URL
-        : 'http://localhost:8000/';
+   const baseUrl =
+  process.env.NODE_ENV === 'production'
+    ? `${process.env.SERVER_BASE_URL}/storeforexplore_api/`
+    : 'http://localhost:8000/';
 
     // ✅ DELETE OLD IMAGE (if exists)
     if (user.userAvatarUrl) {
@@ -219,13 +221,20 @@ export class UserService {
 async getUserProfile(userId:string){
   try {
     const user = await this.userModel.findById(userId).select("-userPassword")
-    const orders = await this.orderModel.find({user:userId})
+    
     if(!user){
       throw new CustomError(400,"User not found")
     }
-    return new CustomResponse(200,"User Profile fetched successfully",{
-      user,orders
-    })
+    const [orders, addressResponse] = await Promise.all([
+      this.orderModel.find({ user: userId }),
+      this.addressService.getUserAddresses(userId), // 👈 CALL SERVICE
+    ]);
+
+    return new CustomResponse(200, 'User Profile fetched successfully', {
+      user,
+      orders,
+      addresses: addressResponse.result || [], // ✅ extract result
+    });
   } catch (err:any) {
     if (err instanceof CustomError) throw err;
     

@@ -135,7 +135,10 @@ export class ProductDetailService {
         throw new CustomError(404, 'Product not found');
       }
 
-      const baseUrl = process.env.BASE_URL ?? '';
+      const baseUrl =
+  process.env.NODE_ENV === 'production'
+    ? `${process.env.SERVER_BASE_URL}/storeforexplore_api/`
+    : 'http://localhost:8000/';
 
       if (updateProductDetailDto.imageUrls?.length) {
         existing.imageUrls?.forEach((img: string) => {
