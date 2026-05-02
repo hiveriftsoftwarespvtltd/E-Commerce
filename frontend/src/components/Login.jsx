@@ -72,10 +72,15 @@ const handleSubmit = async (e) => {
         message: "Login Successful! Redirecting...",
       });
 
-      setTimeout(() => {
+      if(data.data.user.role === 'user'){
         navigate("/");
-        window.location.reload();
-      }, 1200);
+      }else{
+        navigate("/admin")
+      }
+      // setTimeout(() => {
+      //   navigate("/");
+      //   // window.location.reload();
+      // }, 1200);
     } 
     else if (data.statusCode === 401 || data.error === "Unauthorized") {
       setToast({

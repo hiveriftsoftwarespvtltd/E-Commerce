@@ -36,13 +36,13 @@ const FOOTER_LINKS = {
 
   support: [
     { label: "Shipping Policy", link: "/ShippingPolicy" },
-    { label: "Refund Policy", link: "/RefundPolicy" },
+    // { label: "Refund Policy", link: "/RefundPolicy" },
     { label: "Privacy", link: "/PrivacyPolicy" },
     { label: "Terms of Service", link: "/TermsOfService" },
     { label: "Contact Us", link: "/ContactPage" },
-    { label: "Track Your Order", link: "https://track.amazon.in/" },
-    { label: "FAQs", link: "/FAQPage" },
-    { label: "Blog", link: "/BlogCard" },
+    // { label: "Track Your Order", link: "https://track.amazon.in/" },
+    // { label: "FAQs", link: "/FAQPage" },
+    // { label: "Blog", link: "/BlogCard" },
   ],
 
   social: [
@@ -62,7 +62,7 @@ const Footer = () => {
   return (
 <footer className="py-12 bg-light-accent-1 flex justify-center items-center md:pl-40 mt-3">
   <div className="w-full max-w-[1440px] mx-auto px-5 
-      grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+      grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
 
     {/* Menu */}
     <div className="text-accent text-left">
@@ -79,7 +79,7 @@ const Footer = () => {
     </div>
 
     {/* Support */}
-    <div className="text-accent text-left">
+    {/* <div className="text-accent text-left">
       <h4 className="text-lg font-semibold mb-4 uppercase">Support & Policies</h4>
       <ul className="space-y-2">
         {FOOTER_LINKS.support.map((item, index) => (
@@ -90,7 +90,7 @@ const Footer = () => {
           </li>
         ))}
       </ul>
-    </div>
+    </div> */}
 
     {/* Help */}
     <div className="text-accent text-left">

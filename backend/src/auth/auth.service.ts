@@ -157,4 +157,67 @@ export class AuthService {
       throwException(error);
     }
   }
+
+  async changePassword(body: {
+  userId: string;
+  oldPassword: string;
+  newPassword: string;
+}): Promise<any> {
+  try {
+    const { userId, oldPassword, newPassword } = body;
+
+    // 1. Find user
+    const user = await this.userModel
+      .findById(userId)
+      .select('+userPassword');
+
+    if (!user) {
+      return new CustomResponse(HttpStatus.NOT_FOUND, 'User not found');
+    }
+
+    if (!user.userPassword) {
+      return new CustomResponse(
+        HttpStatus.BAD_REQUEST,
+        'Password not set for this user',
+      );
+    }
+
+    // 2. Verify old password
+    const isMatch = await bcrypt.compare(oldPassword, user.userPassword);
+
+    if (!isMatch) {
+      return new CustomResponse(
+        HttpStatus.BAD_REQUEST,
+        'Old password is incorrect',
+      );
+    }
+
+    // 3. Prevent same password reuse
+    const isSamePassword = await bcrypt.compare(
+      newPassword,
+      user.userPassword,
+    );
+
+    if (isSamePassword) {
+      return new CustomResponse(
+        HttpStatus.BAD_REQUEST,
+        'New password cannot be same as old password',
+      );
+    }
+
+    // 4. Hash new password
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+    // 5. Update password (better approach)
+    user.userPassword = hashedPassword;
+    await user.save();
+
+    return new CustomResponse(
+      HttpStatus.OK,
+      'Password changed successfully',
+    );
+  } catch (error) {
+    throwException(error);
+  }
+}
 }

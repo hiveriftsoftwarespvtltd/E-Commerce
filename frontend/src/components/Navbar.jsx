@@ -33,7 +33,6 @@ import { useAuth } from "@/context/UserContext";
 
 const Navbar = ({ onCartOpen }) => {
   const {user,token,isLoggedIn} = useAuth()
-  console.log("Navbar",isLoggedIn,token,user)
   const profileRef = useRef(null);
   const navigate = useNavigate();
   const params = useLocation();
@@ -48,6 +47,7 @@ const Navbar = ({ onCartOpen }) => {
   const [openDropdown, setOpenDropdown] = useState(null);
 
   const [loginDropdown, setLoginDropdown] = useState(false);
+  const {allWebsiteProducts,setAllWebsiteProducts} = useSearch()
 
   // ⭐ SEARCH STATES
   const [searchOpen, setSearchOpen] = useState(false);
@@ -57,8 +57,9 @@ const Navbar = ({ onCartOpen }) => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [userEmail, setUserEmail] = useState("");
   const [userName, setUserName] = useState("User");
-  const [products, setProducts] = useState(productData?.products);
+  const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
+  console.log("All web site products in Navbar.jsx",allWebsiteProducts)
   
 
   const options = [
@@ -139,17 +140,17 @@ const Navbar = ({ onCartOpen }) => {
   const handleSearch2 = (text) => {
     try {
       if (!text) {
-        setFilteredProducts(products); // reset if empty
+        setFilteredProducts(allWebsiteProducts); // reset if empty
         setQuery("");
-        setResults(products);
+        setResults(allWebsiteProducts);
         return;
       }
 
-      console.log(typeof products, Array.isArray(products), "Type of products");
+      
       setQuery(text);
 
-      const filtered = products?.filter((item) =>
-        item.title.toLowerCase().includes(text.toLowerCase()),
+      const filtered = allWebsiteProducts?.filter((item) =>
+        item.name.toLowerCase().includes(text.toLowerCase()),
       );
 
       setFilteredProducts(filtered);
@@ -299,11 +300,11 @@ const Navbar = ({ onCartOpen }) => {
       max-h-[400px] overflow-y-auto z-50 border"
               >
                 {results.length > 0 ? (
-                  results.map((item) => (
+                  results?.map((item) => (
                     <div
-                      key={item.id}
+                      key={item._id}
                       onClick={() => {
-                        navigate(`/products/${item.id}`);
+                        navigate(`/products/${item._id}`);
                         setSearchOpen(false);
                         setQuery("");
                       }}
@@ -311,19 +312,19 @@ const Navbar = ({ onCartOpen }) => {
                      hover:bg-gray-100 cursor-pointer transition"
                     >
                       <img
-                        src={item.images?.[0] || fallbackImage}
-                        alt={item.title}
+                        src={item.imageUrls[0] || fallbackImage}
+                        alt={item.name}
                         className="w-14 h-14 object-cover rounded-md border"
                       />
 
                       <div className="flex flex-col">
                         <p className="font-medium text-gray-800">
-                          {item.title || item.Name}
+                          {item.name}
                         </p>
 
                         <div className="flex items-center gap-2 mt-1">
                           <span className="text-amber-700 font-semibold">
-                            ₹{item.salePrice}
+                            ₹{item.salesPrice}
                           </span>
 
                           {item.originalPrice && (
@@ -426,9 +427,9 @@ const Navbar = ({ onCartOpen }) => {
                 {results.length > 0 ? (
                   results.map((item) => (
                     <div
-                      key={item.id}
+                      key={item._id}
                       onClick={() => {
-                        navigate(`/products/${item.id}`);
+                        navigate(`/products/${item._id}`);
                         setSearchOpen(false);
                         setQuery("");
                       }}
@@ -436,24 +437,24 @@ const Navbar = ({ onCartOpen }) => {
                      hover:bg-gray-100 cursor-pointer transition"
                     >
                       <img
-                        src={item.images?.[0] || fallbackImage}
-                        alt={item.title}
+                        src={item.imageUrls[0] || fallbackImage}
+                        alt={item.name}
                         className="w-14 h-14 object-cover rounded-md border"
                       />
 
                       <div className="flex flex-col">
                         <p className="font-medium text-gray-800 text-sm">
-                          {item.title || item.Name}
+                          {item.name}
                         </p>
 
                         <div className="flex items-center gap-2 mt-1">
                           <span className="text-amber-700 font-semibold">
-                            ₹{item.salePrice}
+                            ₹{item.salesPrice}
                           </span>
 
                           {item.originalPrice && (
                             <span className="line-through text-gray-400 text-sm">
-                              ₹{item.originalPrice}
+                              ₹{item.price}
                             </span>
                           )}
                         </div>
@@ -520,31 +521,31 @@ const Navbar = ({ onCartOpen }) => {
             {results?.length > 0 ? (
               results?.map((item) => (
                 <div
-                  key={item.id}
+                  key={item._id}
                   onClick={() => {
-                    navigate(`/products/${item.id}`);
+                    navigate(`/products/${item._id}`);
                     setSearchOpen(false);
                   }}
                   className="flex items-center gap-4 p-3 border-b hover:bg-gray-100 cursor-pointer"
                 >
                   <img
-                    src={item.images[0] || fallbackImage}
-                    alt={item.title}
+                    src={item.imageUrls[0] || fallbackImage}
+                    alt={item.name}
                     className="w-14 h-14 object-cover rounded-md border"
                   />
 
                   <div className="flex flex-col">
-                    <p className="font-medium text-gray-800">{item.Name}</p>
+                    <p className="font-medium text-gray-800">{item.name}</p>
 
                     <div className="flex items-center gap-2 mt-1">
                       <span className="text-amber-700 font-semibold">
-                        ₹{item.salePrice}
+                        ₹{item.salesPrice}
                       </span>
 
                       {/* <span className="line-through text-gray-500 text-sm">
                         ₹{item.originalPrice}
                       </span> */}
-                      <span>{item.title}</span>
+                      <span>{item.name}</span>
 
                       {/* <span className="text-green-600 text-sm font-medium">
                         {Math.round(

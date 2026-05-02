@@ -92,7 +92,7 @@ const discountMRP = cart.reduce((sum, item) => {
             </p>
           ) : (
             cart?.map((item) => (
-              <div key={item._id} className="flex gap-3 border rounded-lg p-3 cursor-pointer" onClick={()=>navigate(`/products/${item.id}`)}>
+              <div key={item._id} className="flex gap-3 border rounded-lg p-3 cursor-pointer" onClick={()=>navigate(`/products/${item._id}`)}>
                 <img
                   src={item.image || fallbackImage}
                   onError={(e) => (e.target.src = fallbackImage)}

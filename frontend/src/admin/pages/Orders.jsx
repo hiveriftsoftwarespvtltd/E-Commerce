@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Eye } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import BASE from "../../config";
+import { api } from "@/utils/axios-interceptor";
 
 export default function Orders() {
   const navigate = useNavigate();
@@ -52,23 +53,40 @@ export default function Orders() {
   };
 
   // Fetch all orders
-  const fetchOrders = async () => {
-    try {
-      setLoading(true);
-      const res = await fetch(`${BASE.PRODUCT_BASE}/orders`);
-      const data = await res.json();
+  // const fetchOrders = async () => {
+  //   try {
+  //     setLoading(true);
+  //     const res = await fetch(`${BASE.PRODUCT_BASE}/orders`);
+  //     const data = await res.json();
 
-      if (res.ok && data.result) {
-        setOrders(data.result);
-      } else {
+  //     if (res.ok && data.result) {
+  //       setOrders(data.result);
+  //     } else {
+  //       setError(data.message || "Failed to load orders");
+  //     }
+  //   } catch (err) {
+  //     setError("Network error. Please try again.");
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+
+  const fetchOrders = async()=>{
+    try {
+      
+      const response = await api.get("/orders")
+      if(response.data.success){
+        setOrders(response.data.result)
+      }else{
+        setOrders([])
         setError(data.message || "Failed to load orders");
       }
-    } catch (err) {
-      setError("Network error. Please try again.");
-    } finally {
-      setLoading(false);
+    } catch (error) {
+      console.log("Fetch orders details",error)
+    }finally{
+      setLoading(false)
     }
-  };
+  }
 
   useEffect(() => {
     fetchOrders();
