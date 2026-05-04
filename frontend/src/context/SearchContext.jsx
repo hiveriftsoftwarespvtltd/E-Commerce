@@ -1,6 +1,6 @@
 // src/context/SearchContext.jsx
 import { createContext, useContext, useState, useEffect } from "react";
-import BASE from "../config";
+
 import { api } from "@/utils/axios-interceptor";
 
 const SearchContext = createContext();

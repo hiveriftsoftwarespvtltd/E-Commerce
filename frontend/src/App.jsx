@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 
 import { useLocation } from "react-router-dom";
 import { Routes, Route, Outlet } from "react-router-dom";
-import SubcategoryProductPage from "./pages/SubcategoryProductPage";
+
 import Navbar from "./components/Navbar";
 import CartDrawer from "./components/CartDrawer";
 import Home from "./components/Home";
@@ -14,7 +14,7 @@ import OrderSuccess from "./pages/OrderSuccess";
 
 // Admin
 import AdminLayout from "./admin/AdminLayout";
-import ProtectedAdminRoute from "./admin/ProtectedAdminRoute";
+
 
 import Dashboard from "./admin/pages/Dashboard";
 // Admin Auth Pages
@@ -57,13 +57,15 @@ import Favourites from "./pages/Favourites";
 import MobileNavbar from "./components/MobileNavbar";
 import ScrollToTop from "./components/ScrollToTop";
 import AuthRoute from "./wrapper/AuthRoute";
-import GuestUsers from "./pages/GuestUsers";
+import ResetPassword from "./pages/ResetPassword";
+import ForgotPassword from "./pages/ForgotPassword";
+
 
 // Layout
 function MainLayout({ cartOpen, onCartOpen, onCartClose }) {
   return (
     <>
-      <ScrollToTop/>
+      
       <Navbar onCartOpen={onCartOpen} />
       <CartDrawer isOpen={cartOpen} onClose={onCartClose} />
 
@@ -89,6 +91,7 @@ export default function App() {
   return (
     <>
       {/* ⭐ ONLY ONE WRAPPER — Correct */}
+      <ScrollToTop/>
       <FilterProvider>
         <SearchProvider>
           <Routes>
@@ -96,6 +99,7 @@ export default function App() {
             <Route
               element={
                 <AuthRoute allowedRoles={["user","admin"]} publicRoutes={["/","/products"]}>
+                  
                   <MainLayout
                   cartOpen={cartOpen}
                   onCartOpen={() => setCartOpen(true)}
@@ -146,6 +150,9 @@ export default function App() {
             </Route>
               <Route path="/signup" element={<Signup />} />
               <Route path="/login" element={<Login />} />
+              <Route path="/auth/reset-password" element={<ResetPassword />} />
+              <Route path="/auth/forgot-password" element={<ForgotPassword />} />
+              
 
             {/*      ADMIN AUTH ROUTES          */}
             {/* =============================== */}

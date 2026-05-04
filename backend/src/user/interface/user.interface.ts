@@ -12,8 +12,10 @@ export interface User extends Document {
   userAge: number;
   loginType: string;
   userPassword: string;
-  otp: string;
-  otpExpiration: Date; // Assuming password will be a string
+  otp?: string | null;
+  otpExpiration?: Date | null; // Assuming password will be a string
+  resetToken?: string | null;
+  resetTokenExpiry?: Date | null;
   role: 'user' | 'admin';
   location: {
     type: 'Point';

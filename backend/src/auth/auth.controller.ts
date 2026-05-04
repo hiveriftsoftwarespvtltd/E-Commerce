@@ -6,6 +6,7 @@ import { AdminLoginDto } from './dto/admin-login.dto';
 import { ROUTE } from 'src/util/constants';
 import { UserService } from 'src/user/user.service';
 import { AuthGuard } from '@nestjs/passport';
+import { VerifyEmailOtpDto } from './dto/verify-user.dto';
 
 @Controller(ROUTE.AUTH)
 export class AuthController {
@@ -20,16 +21,32 @@ export class AuthController {
     return await this.userservice.create(adminLoginDto);
   }
 
-  @Post('generate-otp')
-  async generateOTP(@Body() createUserDto: CreateUserDto) {
-    return this.authService.sendOTP(createUserDto);
-  }
+  // @Post('generate-otp')
+  // async generateOTP(@Body() createUserDto: CreateUserDto) {
+  //   return this.authService.sendOTP(createUserDto);
+  // }
 
-  @Post('verify-otp')
-  async verifyOTP(@Body() createUserDto: VerifyOtpDto) {
-    return this.authService.verifyOTP(createUserDto);
-  }
+  @Post('forgot-password')
+async forgotPassword(@Body() body: { email: string }) {
+  return this.authService.sendResetPasswordLink(body);
+}
 
+@Post('reset-password')
+async resetPassword(
+  @Body() body: { token: string; newPassword: string }
+) {
+  return this.authService.resetPassword(body);
+}
+
+  @Post('verify-email-otp')
+async verifyOTP(@Body() dto: VerifyEmailOtpDto) {
+  return this.authService.verifyOTP(dto);
+}
+
+   @Post('send-email-otp')
+async sendEmailOTP(@Body() body:{email:string}) {
+  return this.authService.sendForgotPasswordOTP({ email: body.email });
+}
   @Post('resend-otp')
   async resendOtp(@Body() createUserDto: CreateUserDto) {
     return this.authService.resendOtp(createUserDto);

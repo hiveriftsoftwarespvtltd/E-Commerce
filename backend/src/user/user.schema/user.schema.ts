@@ -18,15 +18,17 @@ export const UserSchema = new Schema(
     userAge: { type: Number },
     loginType: { type: String },
     userPassword: { type: String },
-    otpExpiration: { type: Date },
-    otp: { type: String },
+    otpExpiration: { type: Date,default:null },
+    otp: { type: String,default:null },
     role: { type: String, default: 'user' },
     location: {
       type: { type: String, enum: ['Point'], default: 'Point' },
       coordinates: { type: [String], default: ['0', '0'] }, 
     },
     profileImage:{type:String},
-    isActive:{type:Boolean,default:true}
+    isActive:{type:Boolean,default:true},
+    resetToken:{type:String},
+    resetTokenExpiry:{type:Date}
   },
   { timestamps: true },
 );

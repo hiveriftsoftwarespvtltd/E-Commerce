@@ -214,7 +214,7 @@ const handleSubmit = async (e) => {
         {/* Optional: Forgot Password */}
         <div className="text-center mt-4">
           <Link
-            to="/forgot-password"
+            to="/auth/forgot-password"
             className="text-sm text-accent hover:underline"
           >
             Forgot your password?

@@ -11,6 +11,7 @@ import { api } from "@/utils/axios-interceptor";
 
 const UserProducts = () => {
    const [searchParams,setSearchParams] = useSearchParams()
+   console.log("Search Params in line 14",searchParams.get("category"),searchParams.get("min"),searchParams.get("max"))
     const [loading,setLoading] = useState(false)
     const {allWebsiteProducts,setAllWebsiteProducts} = useSearch()
     const [filters, setFilters] = useState({
@@ -70,16 +71,29 @@ useEffect(() => {
   });
 }, [searchParams]);
 
+console.log("All website products",allWebsiteProducts)
+
+  // const filteredProducts = useMemo(() => {
+  //   return allWebsiteProducts?.filter((p) => {
+  //     return (
+  //       (!filters.category || p.category.description === filters.category) &&
+  //       (!filters.min || p.salesPrice >= filters.min) &&
+  //       (!filters.max || p.salesPrice <= filters.max)
+  //     );
+  //   });
+  // }, [filters,allWebsiteProducts]);
 
   const filteredProducts = useMemo(() => {
-    return allWebsiteProducts?.filter((p) => {
-      return (
-        (!filters.category || p.category.description === filters.category) &&
-        (!filters.min || p.salesPrice >= filters.min) &&
-        (!filters.max || p.salesPrice <= filters.max)
-      );
-    });
-  }, [filters,allWebsiteProducts]);
+  return allWebsiteProducts?.filter((p) => {
+    return (
+      (!filters.category ||
+        p.category?.description?.toLowerCase().trim() ===
+          filters.category.toLowerCase().trim()) &&
+      (!filters.min || p.salesPrice >= +filters.min) &&
+      (!filters.max || p.salesPrice <= +filters.max)
+    );
+  });
+}, [filters, allWebsiteProducts]);
 
   const handleWishlistChange = (id, updatedFav) => {
   // update global product list

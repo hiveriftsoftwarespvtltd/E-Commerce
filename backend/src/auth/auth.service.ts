@@ -9,6 +9,7 @@ import { throwException } from 'src/util/errorhandling';
 import { Rider } from 'src/rider/rider.schema/rider.schema';
 import { UserService } from 'src/user/user.service';
 import { JwtService } from '@nestjs/jwt';
+import { generateOTP, otpTemplate, sendMailHelper } from 'src/helpers/mail.service';
 
 @Injectable()
 export class AuthService {
@@ -25,45 +26,45 @@ export class AuthService {
     return otpLib.totp.generate('secret-key');
   }
 
-  async sendOTP(createUserDto: any): Promise<any> {
-    try {
-      const otp = this.generateOTP();
-      const userPhone = createUserDto.userPhone;
-      const user = await this.userModel.findOne({ userPhone });
+  // async sendOTP(createUserDto: any): Promise<any> {
+  //   try {
+  //     const otp = this.generateOTP();
+  //     const userPhone = createUserDto.userPhone;
+  //     const user = await this.userModel.findOne({ userPhone });
 
-      if (!user) {
-        const newUser = new this.userModel({ userPhone, otp });
-        await newUser.save();
-      } else {
-        await this.userModel.updateOne(
-          { userPhone },
-          { otp, otpExpiration: new Date(Date.now() + 1 * 60 * 1000) }
-        );
-      }
+  //     if (!user) {
+  //       const newUser = new this.userModel({ userPhone, otp });
+  //       await newUser.save();
+  //     } else {
+  //       await this.userModel.updateOne(
+  //         { userPhone },
+  //         { otp, otpExpiration: new Date(Date.now() + 1 * 60 * 1000) }
+  //       );
+  //     }
 
-      return new CustomResponse(HttpStatus.OK, 'OTP sent successfully');
-    } catch (error) {
-      throwException(error);
-    }
-  }
+  //     return new CustomResponse(HttpStatus.OK, 'OTP sent successfully');
+  //   } catch (error) {
+  //     throwException(error);
+  //   }
+  // }
 
-  async verifyOTP(createUserDto: any): Promise<any> {
-    try {
-      const userPhone = createUserDto.userPhone;
-      const user = await this.userModel.findOne({ userPhone });
+  // async verifyOTP(createUserDto: any): Promise<any> {
+  //   try {
+  //     const userPhone = createUserDto.userPhone;
+  //     const user = await this.userModel.findOne({ userPhone });
 
-      if (user && createUserDto.otp === user.otp && new Date() < user.otpExpiration) {
-        return new CustomResponse(HttpStatus.OK, 'OTP verified', user);
-      } else if (createUserDto.userType === 'rider') {
-        const rider = await this.riderModel.findOne({ userPhone });
-        return new CustomResponse(HttpStatus.OK, 'OTP verified', rider);
-      }
+  //     if (user && createUserDto.otp === user.otp && new Date() < user.otpExpiration) {
+  //       return new CustomResponse(HttpStatus.OK, 'OTP verified', user);
+  //     } else if (createUserDto.userType === 'rider') {
+  //       const rider = await this.riderModel.findOne({ userPhone });
+  //       return new CustomResponse(HttpStatus.OK, 'OTP verified', rider);
+  //     }
 
-      return new CustomResponse(401, 'OTP expired or invalid');
-    } catch (error) {
-      throwException('Failed to verify OTP');
-    }
-  }
+  //     return new CustomResponse(401, 'OTP expired or invalid');
+  //   } catch (error) {
+  //     throwException('Failed to verify OTP');
+  //   }
+  // }
 
   async resendOtp(createUserDto: any): Promise<any> {
     try {
@@ -216,6 +217,195 @@ export class AuthService {
       HttpStatus.OK,
       'Password changed successfully',
     );
+  } catch (error) {
+    throwException(error);
+  }
+}
+
+
+
+async sendForgotPasswordOTP(body: { email: string }): Promise<any> {
+  try {
+    const { email } = body;
+
+    const user = await this.userModel.findOne({ userEmail: email });
+
+    if (!user) {
+      return new CustomResponse(HttpStatus.NOT_FOUND, 'User not found');
+    }
+
+    const otp = generateOTP();
+
+    user.otp = otp;
+    user.otpExpiration = new Date(Date.now() + 10 * 60 * 1000);
+    await user.save();
+
+    const html = otpTemplate(otp);
+
+    const isSent = await sendMailHelper(email, 'Password Reset OTP', html);
+
+    if (!isSent) {
+      return new CustomResponse(HttpStatus.INTERNAL_SERVER_ERROR, 'Failed to send OTP');
+    }
+
+    return new CustomResponse(HttpStatus.OK, 'OTP sent successfully');
+
+  } catch (error) {
+    throwException(error);
+  }
+}
+
+async verifyOTP(body: { email: string ; otp: string  }) {
+  try {
+    const { email, otp } = body;
+
+    const user = await this.userModel.findOne({ userEmail: email });
+
+    if (!user) {
+      return new CustomResponse(HttpStatus.NOT_FOUND, 'User not found');
+    }
+
+    if (!user.otp || !user.otpExpiration) {
+      return new CustomResponse(HttpStatus.BAD_REQUEST, 'No OTP found');
+    }
+
+    if (user.otp !== otp) {
+      return new CustomResponse(HttpStatus.BAD_REQUEST, 'Invalid OTP');
+    }
+
+    if (user.otpExpiration < new Date()) {
+      return new CustomResponse(HttpStatus.BAD_REQUEST, 'OTP expired');
+    }
+
+    user.otp = null;
+    user.otpExpiration = null;
+    await user.save();
+
+    return new CustomResponse(HttpStatus.OK, 'OTP verified');
+
+  } catch (error) {
+    throwException(error);
+  }
+}
+
+async sendResetPasswordLink(body: { email: string }): Promise<any> {
+  try {
+    const { email } = body;
+
+    const user = await this.userModel.findOne({ userEmail: email });
+
+    if (!user) {
+      return new CustomResponse(HttpStatus.NOT_FOUND, 'User not found',null,false);
+    }
+
+    // 🔐 Generate token
+    const token = this.jwtService.sign(
+      { userId: user._id, email: user.userEmail },
+      { expiresIn: '10m' }
+    );
+
+    // 💾 Save token in DB (important for single-use)
+    user.resetToken = token;
+    user.resetTokenExpiry = new Date(Date.now() + 10 * 60 * 1000);
+    await user.save();
+
+    // 🌐 Dynamic URL
+    const baseUrl =
+      process.env.NODE_ENV === 'development'
+        ? 'http://localhost:5173'
+        : 'https://storeforexplore.in';
+
+    const resetLink = `${baseUrl}/auth/reset-password?token=${token}`;
+
+    // 📩 Email template
+    const html = `
+      <div style="font-family: Arial; padding:20px">
+        <h2>Reset Your Password</h2>
+        <p>Click below to reset your password for <b>Store For Explore</b>:</p>
+        <a href="${resetLink}" 
+           style="display:inline-block;padding:10px 20px;background:#4CAF50;color:#fff;text-decoration:none;border-radius:5px">
+           Reset Password
+        </a>
+        <p>This link will expire in 10 minutes.</p>
+      </div>
+    `;
+
+    const isSent = await sendMailHelper(
+      email,
+      'Reset Password - Store For Explore',
+      html
+    );
+
+    if (!isSent) {
+      return new CustomResponse(
+        HttpStatus.INTERNAL_SERVER_ERROR,
+        'Failed to send email',null,false
+      );
+    }
+
+    return new CustomResponse(HttpStatus.OK, 'Reset link sent');
+
+  } catch (error) {
+    throwException(error);
+  }
+}
+
+async resetPassword(body: { token: string; newPassword: string }) {
+  try {
+    const { token, newPassword } = body;
+
+    if (!token || !newPassword) {
+      return new CustomResponse(
+        HttpStatus.BAD_REQUEST,
+        'Token and password required',null,false
+      );
+    }
+
+    // 🔍 Verify JWT
+    let payload: any;
+    try {
+      payload = this.jwtService.verify(token);
+    } catch (err) {
+      return new CustomResponse(
+        HttpStatus.BAD_REQUEST,
+        'Invalid or expired link',null,false
+      );
+    }
+
+    const user = await this.userModel.findById(payload.userId);
+
+    if (!user) {
+      return new CustomResponse(HttpStatus.NOT_FOUND, 'User not found',null,false);
+    }
+
+    // 🔒 Check DB token (VERY IMPORTANT)
+    if (
+      user.resetToken !== token ||
+      !user.resetTokenExpiry ||
+      user.resetTokenExpiry < new Date()
+    ) {
+      return new CustomResponse(
+        HttpStatus.BAD_REQUEST,
+        'Link expired or already used',null,false
+      );
+    }
+
+    // 🔐 Hash new password
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+    user.userPassword = hashedPassword;
+
+    // ❌ Invalidate token (single-use)
+    user.resetToken = null;
+    user.resetTokenExpiry = null;
+
+    await user.save();
+
+    return new CustomResponse(
+      HttpStatus.OK,
+      'Password reset successful'
+    );
+
   } catch (error) {
     throwException(error);
   }

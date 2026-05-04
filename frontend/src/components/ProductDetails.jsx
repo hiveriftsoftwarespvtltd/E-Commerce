@@ -10,6 +10,7 @@ import ProductDetailsSkeleton from "./ProductDetailsSkeleton";
 import { useSearch } from "@/context/SearchContext";
 import AuthModal from "./AuthModal";
 import { useAuth } from "@/context/UserContext";
+import { Truck } from "lucide-react";
 
 export default function ProductDetails() {
   const { id } = useParams();
@@ -80,8 +81,8 @@ export default function ProductDetails() {
 
           <p className="text-gray-700 text-sm">{product.description}</p>
 
-          <div className="text-sm text-gray-600">
-            🚚 Delivery in {product.estimatedDeliveryDays || "7 days"} days
+          <div className="text-sm text-gray-600 flex items-center gap-2">
+            <Truck /> <span>Delivery in {product.estimatedDeliveryDays || "7 days"} days</span> 
           </div>
 
           {/* <div className="text-sm">

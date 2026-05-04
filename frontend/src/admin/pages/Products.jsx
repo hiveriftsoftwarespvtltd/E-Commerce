@@ -536,7 +536,7 @@ export default function Products() {
               name="description"
               value={form.description}
               onChange={handleChange}
-              className="border rounded-md px-3 py-2 w-full text-sm "
+              className="border rounded-md px-3 py-2 w-full text-sm h-32"
             />
           </div>
 

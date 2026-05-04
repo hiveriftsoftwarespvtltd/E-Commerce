@@ -5,6 +5,7 @@ import { ArrowLeft, Package, MapPin, User, CreditCard } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
 import BASE from "../../config";
 import fallbackImage from "../../assets/accessories.png"; // ⭐ fallback image
+import { api } from "@/utils/axios-interceptor";
 
 export default function OrderDetails() {
   const navigate = useNavigate();
@@ -17,13 +18,19 @@ export default function OrderDetails() {
   // ⭐ FETCH ORDER DETAILS
   const fetchOrderDetails = async () => {
     try {
-      const res = await fetch(`${BASE.PRODUCT_BASE}/orders/${id}`);
-      const data = await res.json();
-
-      if (data.result) {
-        setOrder(data.result);
-        setNewStatus(data.result.status); // Current status
+      const response =await api.get(`/orders/${id}`)
+      if(response.data.success){
+        const orderDetails = response.data.result
+        setOrder(orderDetails)
+        setNewStatus(response.data.status)
       }
+      // const res = await fetch(`${BASE.PRODUCT_BASE}/orders/${id}`);
+      // const data = await res.json();
+
+      // if (data.result) {
+      //   setOrder(data.result);
+      //   setNewStatus(data.result.status); // Current status
+      // }
     } catch (error) {
       console.error("Error loading order:", error);
     } finally {
