@@ -105,7 +105,7 @@ export default function ResetPassword() {
           <button
             type="submit"
             disabled={loading}
-            className={`w-full py-4 bg-accent hover:bg-bold-accent-1  rounded-lg text-white font-bold text-lg transition-all transform duration-200
+            className={`w-full py-2 bg-accent hover:bg-bold-accent-1  rounded-lg text-white font-bold text-lg transition-all transform duration-200
               ${
                 loading
                   ? "cursor-not-allowed"
@@ -114,6 +114,7 @@ export default function ResetPassword() {
           >
             {loading ? "Resetting..." : "Reset Password"}
           </button>
+          <button className="w-full bg-accent text-white py-2 rounded-lg hover:bg-accent-700 transition disabled:opacity-50 cursor-pointer hover:bg-bold-accent-1" onClick={()=>navigate("/")} >Go Back Home</button>
         </form>
       </div>
     </div>

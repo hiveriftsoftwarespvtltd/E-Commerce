@@ -99,6 +99,7 @@ export default function ForgotPassword() {
           >
             {loading ? "Sending..." : "Send Reset Link"}
           </button>
+          <button className="w-full bg-accent text-white py-2 rounded-lg hover:bg-accent-700 transition disabled:opacity-50 cursor-pointer hover:bg-bold-accent-1" onClick={()=>navigate("/")} >Go Back Home</button>
         </form>
       </div>
     </div>
